@@ -65,7 +65,7 @@ export class AuthManager {
     window.location.href = api.getUri({
       url: "/auth/login",
       params: {
-        redirect_url: window.location.href,
+        redirect_url: redirectUrl,
       },
     });
 

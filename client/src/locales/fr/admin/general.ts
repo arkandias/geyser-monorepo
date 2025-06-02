@@ -1,4 +1,4 @@
-import { RoleTypeEnum } from "@/gql/graphql.ts";
+import { RoleType } from "@/gql/graphql.ts";
 import type { AdminColNameOptions } from "@/locales/types.ts";
 
 import type { ColName as AdminRolesRolesColName } from "@/components/admin/AdminGeneralRoles.vue";
@@ -74,7 +74,7 @@ la supprimer.`,
           multiple: "{count} rôles sélectionnés",
         },
         error: {
-          invalidRole: `Le type de rôle doit être ${RoleTypeEnum.Admin} ou ${RoleTypeEnum.Commissioner}`,
+          invalidRole: `Le type de rôle doit être ${RoleType.Admin} ou ${RoleType.Commissioner}`,
         },
       },
       data: {

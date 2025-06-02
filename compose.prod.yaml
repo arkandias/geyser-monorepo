@@ -14,11 +14,6 @@ services:
     image: ghcr.io/arkandias/geyser-backend:latest
     restart: always
 
-  hasura:
-    restart: always
-    environment:
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
-
   frontend:
     image: ghcr.io/arkandias/geyser-frontend:latest
     restart: always

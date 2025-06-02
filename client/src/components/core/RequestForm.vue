@@ -9,7 +9,7 @@ import { type FragmentType, graphql, useFragment } from "@/gql";
 import {
   DeleteRequestDocument,
   RequestFormDataFragmentDoc,
-  RequestTypeEnum,
+  RequestType,
   UpsertRequestDocument,
 } from "@/gql/graphql.ts";
 import { useServicesStore } from "@/stores/useServicesStore.ts";
@@ -32,7 +32,7 @@ graphql(`
     $year: Int!
     $serviceId: Int!
     $courseId: Int!
-    $requestType: RequestTypeEnum!
+    $requestType: RequestType!
     $hours: Float!
   ) {
     request: insertRequestOne(
@@ -55,7 +55,7 @@ graphql(`
   mutation DeleteRequest(
     $serviceId: Int!
     $courseId: Int!
-    $requestType: RequestTypeEnum!
+    $requestType: RequestType!
   ) {
     requests: deleteRequest(
       where: {
@@ -109,19 +109,19 @@ const groups = computed<number | null>({
   },
 });
 
-const requestType = ref<RequestTypeEnum | null>(null);
+const requestType = ref<RequestType | null>(null);
 const requestTypeInit = computed(() =>
   perm.toEditAssignments
-    ? RequestTypeEnum.Assignment
+    ? RequestType.Assignment
     : perm.toSubmitRequests
-      ? RequestTypeEnum.Primary
+      ? RequestType.Primary
       : null,
 );
 const requestTypeOptions = computed(() => [
   ...(perm.toEditAssignments
     ? [
         {
-          value: RequestTypeEnum.Assignment,
+          value: RequestType.Assignment,
           label: t("requestForm.field.requestType.assignment"),
         },
       ]
@@ -129,11 +129,11 @@ const requestTypeOptions = computed(() => [
   ...(perm.toSubmitRequests
     ? [
         {
-          value: RequestTypeEnum.Primary,
+          value: RequestType.Primary,
           label: t("requestForm.field.requestType.primary"),
         },
         {
-          value: RequestTypeEnum.Secondary,
+          value: RequestType.Secondary,
           label: t("requestForm.field.requestType.secondary"),
         },
       ]

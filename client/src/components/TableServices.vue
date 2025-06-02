@@ -7,7 +7,7 @@ import { useTypedI18n } from "@/composables/useTypedI18n.ts";
 import { TOOLTIP_DELAY } from "@/config/constants.ts";
 import { type FragmentType, graphql, useFragment } from "@/gql";
 import {
-  RequestTypeEnum,
+  RequestType,
   type ServiceRowFragment,
   ServiceRowFragmentDoc,
 } from "@/gql/graphql.ts";
@@ -67,13 +67,13 @@ const services = computed<ServiceRow[]>(() =>
       (t, r) => ({
         totalAssignment:
           t.totalAssignment +
-          (r.type === RequestTypeEnum.Assignment ? (r.hoursWeighted ?? 0) : 0),
+          (r.type === RequestType.Assignment ? (r.hoursWeighted ?? 0) : 0),
         totalPrimary:
           t.totalAssignment +
-          (r.type === RequestTypeEnum.Primary ? (r.hoursWeighted ?? 0) : 0),
+          (r.type === RequestType.Primary ? (r.hoursWeighted ?? 0) : 0),
         totalSecondary:
           t.totalAssignment +
-          (r.type === RequestTypeEnum.Secondary ? (r.hoursWeighted ?? 0) : 0),
+          (r.type === RequestType.Secondary ? (r.hoursWeighted ?? 0) : 0),
       }),
       {
         totalAssignment: 0,

@@ -1,4 +1,4 @@
-import { RoleTypeEnum } from "@/gql/graphql.ts";
+import { RoleType } from "@/gql/graphql.ts";
 import type { AdminColNameOptions } from "@/locales/types.ts";
 
 import type { ColName as AdminRolesRolesColName } from "@/components/admin/AdminGeneralRoles.vue";
@@ -74,7 +74,7 @@ If courses or services are associated with this year, you will not be able to de
           multiple: "{count} roles selected",
         },
         error: {
-          invalidRole: `Role type must be ${RoleTypeEnum.Admin} or ${RoleTypeEnum.Commissioner}`,
+          invalidRole: `Role type must be ${RoleType.Admin} or ${RoleType.Commissioner}`,
         },
       },
       data: {

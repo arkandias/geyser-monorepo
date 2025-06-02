@@ -3,7 +3,7 @@ import { computed, inject } from "vue";
 
 import { useRefreshData } from "@/composables/useRefreshData.ts";
 import { useTypedI18n } from "@/composables/useTypedI18n.ts";
-import { RoleTypeEnum } from "@/gql/graphql.ts";
+import { RoleType } from "@/gql/graphql.ts";
 import { roleTypeLabel } from "@/locales/helpers.ts";
 import type { AuthManager } from "@/services/auth.ts";
 
@@ -15,7 +15,7 @@ const { t } = useTypedI18n();
 const { refreshData } = useRefreshData();
 
 const roleOptions = computed(() =>
-  [RoleTypeEnum.Admin, RoleTypeEnum.Commissioner, RoleTypeEnum.Teacher]
+  [RoleType.Admin, RoleType.Commissioner, RoleType.Teacher]
     .filter((role) => authManager.allowedRoles.includes(role))
     .map((role) => ({
       value: role,
@@ -23,7 +23,7 @@ const roleOptions = computed(() =>
     })),
 );
 
-const updateRole = async (value: RoleTypeEnum) => {
+const updateRole = async (value: RoleType) => {
   authManager.setActiveRole(value);
   await refreshData();
 };

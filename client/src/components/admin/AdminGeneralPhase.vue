@@ -4,7 +4,7 @@ import { useMutation } from "@urql/vue";
 import { NotifyType, useNotify } from "@/composables/useNotify.ts";
 import { useTypedI18n } from "@/composables/useTypedI18n.ts";
 import { graphql } from "@/gql";
-import { PhaseEnum, SetCurrentPhaseDocument } from "@/gql/graphql.ts";
+import { Phase, SetCurrentPhaseDocument } from "@/gql/graphql.ts";
 import { phaseLabel } from "@/locales/helpers.ts";
 import { useCurrentPhaseStore } from "@/stores/useCurrentPhaseStore.ts";
 
@@ -13,17 +13,17 @@ const { notify } = useNotify();
 const { currentPhase } = useCurrentPhaseStore();
 
 const phaseOptions = [
-  PhaseEnum.Requests,
-  PhaseEnum.Assignments,
-  PhaseEnum.Results,
-  PhaseEnum.Shutdown,
+  Phase.Requests,
+  Phase.Assignments,
+  Phase.Results,
+  Phase.Shutdown,
 ].map((phase) => ({
   value: phase,
   label: phaseLabel(t, phase),
 }));
 
 graphql(`
-  mutation SetCurrentPhase($phase: PhaseEnum!) {
+  mutation SetCurrentPhase($phase: Phase!) {
     phase: updateCurrentPhaseByPk(
       pkColumns: { id: 1 }
       _set: { value: $phase }
@@ -35,7 +35,7 @@ graphql(`
 
 const setCurrentPhase = useMutation(SetCurrentPhaseDocument);
 
-const setCurrentPhaseHandle = async (phase: PhaseEnum): Promise<void> => {
+const setCurrentPhaseHandle = async (phase: Phase): Promise<void> => {
   const { error } = await setCurrentPhase.executeMutation({ phase });
   if (error) {
     notify(NotifyType.Error, {

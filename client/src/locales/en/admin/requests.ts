@@ -1,4 +1,4 @@
-import { RequestTypeEnum } from "@/gql/graphql.ts";
+import { RequestType } from "@/gql/graphql.ts";
 import type { AdminColNameOptions } from "@/locales/types.ts";
 
 import type { ColName as AdminRequestsPrioritiesColNames } from "@/components/admin/AdminRequestsPriorities.vue";
@@ -66,7 +66,7 @@ export default {
             "To update the course, you must select a year, degree, program, track (possibly empty), course, semester, and course type",
           courseNotFound:
             'No {type} in semester {semester} with the name "{name}" in the track "{track}" of the program "{program}" of the degree "{degree}" for year {year} exists',
-          invalidType: `The request type must be ${RequestTypeEnum.Assignment}, ${RequestTypeEnum.Primary} or ${RequestTypeEnum.Secondary}`,
+          invalidType: `The request type must be ${RequestType.Assignment}, ${RequestType.Primary} or ${RequestType.Secondary}`,
           hoursNegative: "Enter a positive or zero number of hours",
         },
       },

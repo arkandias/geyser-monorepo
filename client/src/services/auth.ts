@@ -11,7 +11,7 @@ import {
   API_TOKEN_MIN_VALIDITY,
 } from "@/config/constants.ts";
 import { apiUrl } from "@/config/env.ts";
-import { RoleTypeEnum } from "@/gql/graphql.ts";
+import { RoleType as RoleTypeEnum } from "@/gql/graphql.ts";
 import { capitalize, toLowerCase } from "@/utils/misc.ts";
 
 const api = axios.create({
@@ -164,7 +164,7 @@ export class AuthManager {
 
   getRoleHeader(): Record<string, string> {
     return {
-      "X-Hasura-Role": this._role.value,
+      "X-User-Role": this._role.value,
     };
   }
 

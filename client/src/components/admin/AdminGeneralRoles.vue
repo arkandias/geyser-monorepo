@@ -16,7 +16,7 @@ import {
   InsertRolesDocument,
   RoleConstraint,
   type RoleInsertInput,
-  RoleTypeEnum,
+  RoleType,
   RoleUpdateColumn,
   UpdateRolesDocument,
   UpsertRolesDocument,
@@ -52,7 +52,7 @@ const rowDescriptor = {
   },
   type: {
     type: "string",
-    format: (val: RoleTypeEnum) => roleTypeLabel(t, val),
+    format: (val: RoleType) => roleTypeLabel(t, val),
     formType: "select",
   },
   comment: {
@@ -155,7 +155,7 @@ const validateFlatRow = (flatRow: FlatRow): InsertInput => {
 const formValues = ref<Record<string, Scalar>>({});
 const formOptions = computed(() => ({
   uid: teachers.value.map((t) => ({ value: t.uid, label: t.displayname })),
-  type: Object.values(RoleTypeEnum).map((type) => ({
+  type: Object.values(RoleType).map((type) => ({
     value: type,
     label: roleTypeLabel(t, type),
   })),

@@ -12,7 +12,7 @@ import {
   GetAssignmentDocument,
   InsertAssignmentDocument,
   RequestCardDataFragmentDoc,
-  RequestTypeEnum,
+  RequestType,
   UpdateAssignmentDocument,
 } from "@/gql/graphql.ts";
 import { priorityColor } from "@/utils/colors.ts";
@@ -120,17 +120,17 @@ const groups = computed(() =>
 );
 
 const displayAssignButton = computed(
-  () => (requestType: RequestTypeEnum) =>
-    requestType !== RequestTypeEnum.Assignment && perm.toEditAssignments,
+  () => (requestType: RequestType) =>
+    requestType !== RequestType.Assignment && perm.toEditAssignments,
 );
 const displayDeleteButton = computed(
-  () => (requestType: RequestTypeEnum) =>
-    requestType === RequestTypeEnum.Assignment
+  () => (requestType: RequestType) =>
+    requestType === RequestType.Assignment
       ? perm.toEditAssignments
       : perm.toDeleteRequests,
 );
 const displayActions = computed(
-  () => (requestType: RequestTypeEnum) =>
+  () => (requestType: RequestType) =>
     displayAssignButton.value(requestType) ||
     displayDeleteButton.value(requestType),
 );

@@ -1,10 +1,10 @@
 import { readonly, ref } from "vue";
 
-import { PhaseEnum } from "@/gql/graphql.ts";
+import { Phase } from "@/gql/graphql.ts";
 
-const currentPhase = ref<PhaseEnum>(PhaseEnum.Shutdown);
+const currentPhase = ref<Phase>(Phase.Shutdown);
 
-const setCurrentPhase = (phase: PhaseEnum) => {
+const setCurrentPhase = (phase: Phase) => {
   currentPhase.value = phase;
 };
 

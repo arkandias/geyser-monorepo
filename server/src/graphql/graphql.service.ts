@@ -1,3 +1,4 @@
+import { PgSimplifyInflectionPreset } from "@graphile/simplify-inflection";
 import {
   Injectable,
   InternalServerErrorException,
@@ -9,6 +10,7 @@ import { makeSchema } from "postgraphile";
 import { makePgService } from "postgraphile/adaptors/pg";
 import { grafast } from "postgraphile/grafast";
 import { PostGraphileAmberPreset } from "postgraphile/presets/amber";
+import { makeV4Preset } from "postgraphile/presets/v4";
 
 import { ConfigService } from "../config/config.service";
 
@@ -21,7 +23,19 @@ export class GraphqlService implements OnModuleInit {
 
   async onModuleInit() {
     const { schema, resolvedPreset } = await makeSchema({
-      extends: [PostGraphileAmberPreset],
+      extends: [
+        PostGraphileAmberPreset,
+        makeV4Preset({
+          // Remove Relay connection wrapper (nodes/edges)
+          simpleCollections: "only",
+        }),
+        PgSimplifyInflectionPreset,
+      ],
+
+      schema: {
+        // Remove "List" suffix from collection names
+        pgOmitListSuffix: true,
+      },
 
       pgServices: [
         makePgService({

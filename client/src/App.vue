@@ -5,7 +5,7 @@ import { computed, inject, watch } from "vue";
 import { NotifyType, useNotify } from "@/composables/useNotify.ts";
 import { useTypedI18n } from "@/composables/useTypedI18n.ts";
 import { graphql } from "@/gql";
-import { GetAppDataDocument, PhaseEnum, RoleTypeEnum } from "@/gql/graphql.ts";
+import { GetAppDataDocument, Phase, RoleType } from "@/gql/graphql.ts";
 import type { AuthManager } from "@/services/auth.ts";
 import { useCurrentPhaseStore } from "@/stores/useCurrentPhaseStore.ts";
 import { useCustomTextsStore } from "@/stores/useCustomTextsStore.ts";
@@ -17,23 +17,21 @@ import PageHome from "@/pages/PageHome.vue";
 
 graphql(`
   query GetAppData($uid: String!) {
-    phase: currentPhase(
-      limit: 1 # unique
-    ) {
+    currentPhase(id: 1) {
       value
     }
-    years: year(orderBy: { value: DESC }) {
+    years(orderBy: [VALUE_DESC]) {
       value
       current
       visible
     }
-    customTexts: appSetting(orderBy: [{ key: ASC }]) {
+    appSettings(orderBy: [KEY_ASC]) {
       key
       value
     }
-    services: service(where: { uid: { _eq: $uid } }) {
+    services(condition: { uid: $uid }) {
       id
-      year
+      year: yearValue
     }
   }
 `);
@@ -67,8 +65,8 @@ watch(
       });
       return;
     }
-    if (data?.phase[0]?.value) {
-      setCurrentPhase(data.phase[0].value);
+    if (data?.currentPhase?.value) {
+      setCurrentPhase(data.currentPhase.value);
     }
     if (data?.years) {
       setYears(
@@ -79,8 +77,8 @@ watch(
         })),
       );
     }
-    if (data?.customTexts) {
-      setCustomTexts(data.customTexts);
+    if (data?.appSettings) {
+      setCustomTexts(data.appSettings);
     }
     if (data?.services) {
       setServices(data.services);
@@ -96,13 +94,13 @@ watch(
       return;
     }
 
-    if (authManager.allowedRoles.includes(RoleTypeEnum.Admin)) {
-      authManager.setActiveRole(RoleTypeEnum.Admin);
+    if (authManager.allowedRoles.includes(RoleType.Admin)) {
+      authManager.setActiveRole(RoleType.Admin);
     } else if (
-      authManager.allowedRoles.includes(RoleTypeEnum.Commissioner) &&
-      phase === PhaseEnum.Assignments
+      authManager.allowedRoles.includes(RoleType.Commissioner) &&
+      phase === Phase.Assignments
     ) {
-      authManager.setActiveRole(RoleTypeEnum.Commissioner);
+      authManager.setActiveRole(RoleType.Commissioner);
     }
   },
   { immediate: true },
@@ -120,8 +118,8 @@ const accessDeniedMessage = computed(() => {
     return t("home.alert.loadingAppData");
   }
   if (
-    currentPhase.value === PhaseEnum.Shutdown &&
-    authManager.activeRole.value !== RoleTypeEnum.Admin
+    currentPhase.value === Phase.Shutdown &&
+    authManager.activeRole.value !== RoleType.Admin
   ) {
     return t("home.alert.shutdown");
   }

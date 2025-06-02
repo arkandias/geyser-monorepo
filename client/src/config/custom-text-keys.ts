@@ -1,16 +1,16 @@
-import { PhaseEnum } from "@/gql/graphql.ts";
+import { Phase } from "@/gql/graphql.ts";
 import { capitalize, toLowerCase } from "@/utils/misc.ts";
 
 export const CUSTOM_TEXT_KEYS = [
   "homeTitle",
-  `homeSubtitle${capitalize(toLowerCase(PhaseEnum.Requests))}`,
-  `homeSubtitle${capitalize(toLowerCase(PhaseEnum.Assignments))}`,
-  `homeSubtitle${capitalize(toLowerCase(PhaseEnum.Results))}`,
-  `homeSubtitle${capitalize(toLowerCase(PhaseEnum.Shutdown))}`,
-  `homeMessage${capitalize(toLowerCase(PhaseEnum.Requests))}`,
-  `homeMessage${capitalize(toLowerCase(PhaseEnum.Assignments))}`,
-  `homeMessage${capitalize(toLowerCase(PhaseEnum.Results))}`,
-  `homeMessage${capitalize(toLowerCase(PhaseEnum.Shutdown))}`,
+  `homeSubtitle${capitalize(toLowerCase(Phase.Requests))}`,
+  `homeSubtitle${capitalize(toLowerCase(Phase.Assignments))}`,
+  `homeSubtitle${capitalize(toLowerCase(Phase.Results))}`,
+  `homeSubtitle${capitalize(toLowerCase(Phase.Shutdown))}`,
+  `homeMessage${capitalize(toLowerCase(Phase.Requests))}`,
+  `homeMessage${capitalize(toLowerCase(Phase.Assignments))}`,
+  `homeMessage${capitalize(toLowerCase(Phase.Results))}`,
+  `homeMessage${capitalize(toLowerCase(Phase.Shutdown))}`,
   "contact",
   "legalNotice",
 ] as const;

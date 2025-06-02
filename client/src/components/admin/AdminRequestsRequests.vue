@@ -32,7 +32,7 @@ import {
   InsertRequestsDocument,
   RequestConstraint,
   type RequestInsertInput,
-  RequestTypeEnum,
+  RequestType,
   RequestUpdateColumn,
   UpdateRequestsDocument,
   UpsertRequestsDocument,
@@ -133,8 +133,8 @@ const rowDescriptor = {
   },
   type: {
     type: "string",
-    info: `${RequestTypeEnum.Assignment} | ${RequestTypeEnum.Primary} | ${RequestTypeEnum.Secondary}`,
-    format: (val: RequestTypeEnum) => requestTypeLabel(t, val),
+    info: `${RequestType.Assignment} | ${RequestType.Primary} | ${RequestType.Secondary}`,
+    format: (val: RequestType) => requestTypeLabel(t, val),
     formType: "select",
   },
   hours: {
@@ -460,7 +460,7 @@ const formOptions = computed(() => ({
         c.semester === formValues.value["semester"],
     )
     .map((c) => c.type.label),
-  type: Object.values(RequestTypeEnum).map((type) => requestTypeLabel(t, type)),
+  type: Object.values(RequestType).map((type) => requestTypeLabel(t, type)),
 }));
 
 const filterValues = ref<Record<string, Scalar[]>>({});

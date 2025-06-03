@@ -219,7 +219,7 @@ type Coordination implements Node {
   programId: Int
 
   """Reads a single `Teacher` that is related to this `Coordination`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Reads a single `Track` that is related to this `Coordination`."""
   track: Track
@@ -468,7 +468,7 @@ type Course implements Node {
   priorityRule: Int
 
   """Reads a single `Program` that is related to this `Course`."""
-  program: Program
+  program: Program!
 
   """Program offering this course"""
   programId: Int!
@@ -500,7 +500,7 @@ type Course implements Node {
   trackProgram: Track
 
   """Reads a single `CourseType` that is related to this `Course`."""
-  type: CourseType
+  type: CourseType!
 
   """Reference to course delivery type affecting workload calculation"""
   typeId: Int!
@@ -514,7 +514,7 @@ type Course implements Node {
   visible: Boolean!
 
   """Reads a single `Year` that is related to this `Course`."""
-  year: Year
+  year: Year!
 
   """Academic year when the course is offered"""
   yearValue: Int!
@@ -967,7 +967,7 @@ type CreateCoordinationPayload {
   query: Query
 
   """Reads a single `Teacher` that is related to this `Coordination`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Reads a single `Track` that is related to this `Coordination`."""
   track: Track
@@ -997,7 +997,7 @@ type CreateCoursePayload {
   course: Course
 
   """Reads a single `Program` that is related to this `Course`."""
-  program: Program
+  program: Program!
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -1008,10 +1008,10 @@ type CreateCoursePayload {
   trackProgram: Track
 
   """Reads a single `CourseType` that is related to this `Course`."""
-  type: CourseType
+  type: CourseType!
 
   """Reads a single `Year` that is related to this `Course`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the create `CourseType` mutation."""
@@ -1151,7 +1151,7 @@ type CreatePriorityPayload {
   clientMutationId: String
 
   """Reads a single `Course` that is related to this `Priority`."""
-  courseByYearValueAndCourseId: Course
+  courseByYearValueAndCourseId: Course!
 
   """The `Priority` that was created by this mutation."""
   priority: Priority
@@ -1162,10 +1162,10 @@ type CreatePriorityPayload {
   query: Query
 
   """Reads a single `Service` that is related to this `Priority`."""
-  serviceByYearValueAndServiceId: Service
+  serviceByYearValueAndServiceId: Service!
 
   """Reads a single `Year` that is related to this `Priority`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the create `Program` mutation."""
@@ -1189,7 +1189,7 @@ type CreateProgramPayload {
   clientMutationId: String
 
   """Reads a single `Degree` that is related to this `Program`."""
-  degree: Degree
+  degree: Degree!
 
   """The `Program` that was created by this mutation."""
   program: Program
@@ -1221,7 +1221,7 @@ type CreateRequestPayload {
   clientMutationId: String
 
   """Reads a single `Course` that is related to this `Request`."""
-  courseByYearValueAndCourseId: Course
+  courseByYearValueAndCourseId: Course!
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -1232,10 +1232,13 @@ type CreateRequestPayload {
   request: Request
 
   """Reads a single `Service` that is related to this `Request`."""
-  serviceByYearValueAndServiceId: Service
+  serviceByYearValueAndServiceId: Service!
+
+  """Reads a single `VService` that is related to this `Request`."""
+  vServiceByServiceId: VService!
 
   """Reads a single `Year` that is related to this `Request`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the create `Role` mutation."""
@@ -1267,7 +1270,7 @@ type CreateRolePayload {
   role: Role
 
   """Reads a single `Teacher` that is related to this `Role`."""
-  teacher: Teacher
+  teacher: Teacher!
 }
 
 """All input for the create `Service` mutation."""
@@ -1310,7 +1313,7 @@ type CreateServiceModificationPayload {
   """
   Reads a single `Service` that is related to this `ServiceModification`.
   """
-  service: Service
+  service: Service!
 
   """The `ServiceModification` that was created by this mutation."""
   serviceModification: ServiceModification
@@ -1318,7 +1321,7 @@ type CreateServiceModificationPayload {
   """
   Reads a single `ServiceModificationType` that is related to this `ServiceModification`.
   """
-  type: ServiceModificationType
+  type: ServiceModificationType!
 }
 
 """All input for the create `ServiceModificationType` mutation."""
@@ -1367,10 +1370,10 @@ type CreateServicePayload {
   service: Service
 
   """Reads a single `Teacher` that is related to this `Service`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Reads a single `Year` that is related to this `Service`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the create `Teacher` mutation."""
@@ -1452,7 +1455,7 @@ type CreateTrackPayload {
   clientMutationId: String
 
   """Reads a single `Program` that is related to this `Track`."""
-  program: Program
+  program: Program!
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -1490,6 +1493,12 @@ type CreateVServicePayload {
 
   """The `VService` that was created by this mutation."""
   vService: VService
+
+  """Reads a single `VTeacher` that is related to this `VService`."""
+  vTeacherByUid: VTeacher!
+
+  """Reads a single `Year` that is related to this `VService`."""
+  year: Year!
 }
 
 """All input for the create `VTeacher` mutation."""
@@ -1947,7 +1956,7 @@ type DeleteCoordinationPayload {
   query: Query
 
   """Reads a single `Teacher` that is related to this `Coordination`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Reads a single `Track` that is related to this `Coordination`."""
   track: Track
@@ -2036,7 +2045,7 @@ type DeleteCoursePayload {
   deletedCourseNodeId: ID
 
   """Reads a single `Program` that is related to this `Course`."""
-  program: Program
+  program: Program!
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -2047,10 +2056,10 @@ type DeleteCoursePayload {
   trackProgram: Track
 
   """Reads a single `CourseType` that is related to this `Course`."""
-  type: CourseType
+  type: CourseType!
 
   """Reads a single `Year` that is related to this `Course`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the `deleteCourseTypeByLabel` mutation."""
@@ -2315,7 +2324,7 @@ type DeletePriorityPayload {
   clientMutationId: String
 
   """Reads a single `Course` that is related to this `Priority`."""
-  courseByYearValueAndCourseId: Course
+  courseByYearValueAndCourseId: Course!
   deletedPriorityNodeId: ID
 
   """The `Priority` that was deleted by this mutation."""
@@ -2327,10 +2336,10 @@ type DeletePriorityPayload {
   query: Query
 
   """Reads a single `Service` that is related to this `Priority`."""
-  serviceByYearValueAndServiceId: Service
+  serviceByYearValueAndServiceId: Service!
 
   """Reads a single `Year` that is related to this `Priority`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the `deleteProgramByDegreeIdAndName` mutation."""
@@ -2383,7 +2392,7 @@ type DeleteProgramPayload {
   clientMutationId: String
 
   """Reads a single `Degree` that is related to this `Program`."""
-  degree: Degree
+  degree: Degree!
   deletedProgramNodeId: ID
 
   """The `Program` that was deleted by this mutation."""
@@ -2421,8 +2430,6 @@ input DeleteRequestByServiceIdAndCourseIdAndTypeInput {
 
   """Requested or assigned course"""
   courseId: Int!
-
-  """Associated teacher service record"""
   serviceId: Int!
 
   """Type of request (primary choice, backup, or final assignment)"""
@@ -2450,7 +2457,7 @@ type DeleteRequestPayload {
   clientMutationId: String
 
   """Reads a single `Course` that is related to this `Request`."""
-  courseByYearValueAndCourseId: Course
+  courseByYearValueAndCourseId: Course!
   deletedRequestNodeId: ID
 
   """
@@ -2462,10 +2469,13 @@ type DeleteRequestPayload {
   request: Request
 
   """Reads a single `Service` that is related to this `Request`."""
-  serviceByYearValueAndServiceId: Service
+  serviceByYearValueAndServiceId: Service!
+
+  """Reads a single `VService` that is related to this `Request`."""
+  vServiceByServiceId: VService!
 
   """Reads a single `Year` that is related to this `Request`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the `deleteRoleByNodeId` mutation."""
@@ -2527,7 +2537,7 @@ type DeleteRolePayload {
   role: Role
 
   """Reads a single `Teacher` that is related to this `Role`."""
-  teacher: Teacher
+  teacher: Teacher!
 }
 
 """All input for the `deleteServiceByIdAndYearValue` mutation."""
@@ -2629,7 +2639,7 @@ type DeleteServiceModificationPayload {
   """
   Reads a single `Service` that is related to this `ServiceModification`.
   """
-  service: Service
+  service: Service!
 
   """The `ServiceModification` that was deleted by this mutation."""
   serviceModification: ServiceModification
@@ -2637,7 +2647,7 @@ type DeleteServiceModificationPayload {
   """
   Reads a single `ServiceModificationType` that is related to this `ServiceModification`.
   """
-  type: ServiceModificationType
+  type: ServiceModificationType!
 }
 
 """All input for the `deleteServiceModificationTypeByLabel` mutation."""
@@ -2714,10 +2724,10 @@ type DeleteServicePayload {
   service: Service
 
   """Reads a single `Teacher` that is related to this `Service`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Reads a single `Year` that is related to this `Service`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the `deleteTeacherByNodeId` mutation."""
@@ -2835,7 +2845,7 @@ type DeleteTrackPayload {
   deletedTrackNodeId: ID
 
   """Reads a single `Program` that is related to this `Track`."""
-  program: Program
+  program: Program!
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -2888,6 +2898,31 @@ type DeleteYearPayload {
 
   """The `Year` that was deleted by this mutation."""
   year: Year
+}
+
+"""All input for the `dummyMutation` mutation."""
+input DummyMutationInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+}
+
+"""The output of our `dummyMutation` mutation."""
+type DummyMutationPayload {
+  boolean: Boolean
+
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
 }
 
 """
@@ -3510,6 +3545,14 @@ type Mutation {
     input: DeleteYearByNodeIdInput!
   ): DeleteYearPayload
 
+  """Dummy mutation that does nothing"""
+  dummyMutation(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DummyMutationInput!
+  ): DummyMutationPayload
+
   """Updates a single `AppSetting` using a unique key and a patch."""
   updateAppSetting(
     """
@@ -4118,7 +4161,7 @@ type Priority implements Node {
   computed: Boolean!
 
   """Reads a single `Course` that is related to this `Priority`."""
-  courseByYearValueAndCourseId: Course
+  courseByYearValueAndCourseId: Course!
 
   """Course for which priority is tracked"""
   courseId: Int!
@@ -4141,7 +4184,7 @@ type Priority implements Node {
   seniority: Int
 
   """Reads a single `Service` that is related to this `Priority`."""
-  serviceByYearValueAndServiceId: Service
+  serviceByYearValueAndServiceId: Service!
 
   """Associated teacher service record"""
   serviceId: Int!
@@ -4152,7 +4195,7 @@ type Priority implements Node {
   updatedAt: Datetime!
 
   """Reads a single `Year` that is related to this `Priority`."""
-  year: Year
+  year: Year!
 
   """Year of the priority (must match service's and course's year)"""
   yearValue: Int!
@@ -4295,7 +4338,7 @@ type Program implements Node {
   createdAt: Datetime!
 
   """Reads a single `Degree` that is related to this `Program`."""
-  degree: Degree
+  degree: Degree!
 
   """Parent degree for this program"""
   degreeId: Int!
@@ -5013,7 +5056,7 @@ type Query implements Node {
 """Teacher requests and assignments for courses"""
 type Request implements Node {
   """Reads a single `Course` that is related to this `Request`."""
-  courseByYearValueAndCourseId: Course
+  courseByYearValueAndCourseId: Course!
 
   """Requested or assigned course"""
   courseId: Int!
@@ -5023,9 +5066,11 @@ type Request implements Node {
 
   """Requested or assigned teaching hours"""
   hours: Float!
+  hoursWeighted: Float
 
   """Unique request identifier"""
   id: Int!
+  isPriority: Boolean
 
   """
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -5033,9 +5078,7 @@ type Request implements Node {
   nodeId: ID!
 
   """Reads a single `Service` that is related to this `Request`."""
-  serviceByYearValueAndServiceId: Service
-
-  """Associated teacher service record"""
+  serviceByYearValueAndServiceId: Service!
   serviceId: Int!
 
   """Type of request (primary choice, backup, or final assignment)"""
@@ -5046,8 +5089,11 @@ type Request implements Node {
   """
   updatedAt: Datetime!
 
+  """Reads a single `VService` that is related to this `Request`."""
+  vServiceByServiceId: VService!
+
   """Reads a single `Year` that is related to this `Request`."""
-  year: Year
+  year: Year!
 
   """Year of the request (must match service's and course's year)"""
   yearValue: Int!
@@ -5092,8 +5138,6 @@ input RequestInput {
 
   """Requested or assigned teaching hours"""
   hours: Float!
-
-  """Associated teacher service record"""
   serviceId: Int!
 
   """Type of request (primary choice, backup, or final assignment)"""
@@ -5120,8 +5164,6 @@ input RequestPatch {
 
   """Requested or assigned teaching hours"""
   hours: Float
-
-  """Associated teacher service record"""
   serviceId: Int
 
   """Type of request (primary choice, backup, or final assignment)"""
@@ -5189,7 +5231,7 @@ type Role implements Node {
   nodeId: ID!
 
   """Reads a single `Teacher` that is related to this `Role`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Type of privileged role"""
   type: RoleType!
@@ -5373,7 +5415,7 @@ type Service implements Node {
   ): [ServiceModification!]!
 
   """Reads a single `Teacher` that is related to this `Service`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Teacher identifier linking to teacher table"""
   uid: String!
@@ -5384,7 +5426,7 @@ type Service implements Node {
   updatedAt: Datetime!
 
   """Reads a single `Year` that is related to this `Service`."""
-  year: Year
+  year: Year!
 
   """Academic year for this service record"""
   yearValue: Int!
@@ -5458,7 +5500,7 @@ type ServiceModification implements Node {
   """
   Reads a single `Service` that is related to this `ServiceModification`.
   """
-  service: Service
+  service: Service!
 
   """Reference to affected service record"""
   serviceId: Int!
@@ -5466,7 +5508,7 @@ type ServiceModification implements Node {
   """
   Reads a single `ServiceModificationType` that is related to this `ServiceModification`.
   """
-  type: ServiceModificationType
+  type: ServiceModificationType!
 
   """Reference to service modification type"""
   typeId: Int!
@@ -6045,7 +6087,7 @@ type Track implements Node {
   nodeId: ID!
 
   """Reads a single `Program` that is related to this `Track`."""
-  program: Program
+  program: Program!
 
   """Parent program for this track"""
   programId: Int!
@@ -6319,7 +6361,7 @@ type UpdateCoordinationPayload {
   query: Query
 
   """Reads a single `Teacher` that is related to this `Coordination`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Reads a single `Track` that is related to this `Coordination`."""
   track: Track
@@ -6427,7 +6469,7 @@ type UpdateCoursePayload {
   course: Course
 
   """Reads a single `Program` that is related to this `Course`."""
-  program: Program
+  program: Program!
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -6438,10 +6480,10 @@ type UpdateCoursePayload {
   trackProgram: Track
 
   """Reads a single `CourseType` that is related to this `Course`."""
-  type: CourseType
+  type: CourseType!
 
   """Reads a single `Year` that is related to this `Course`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the `updateCourseTypeByLabel` mutation."""
@@ -6772,7 +6814,7 @@ type UpdatePriorityPayload {
   clientMutationId: String
 
   """Reads a single `Course` that is related to this `Priority`."""
-  courseByYearValueAndCourseId: Course
+  courseByYearValueAndCourseId: Course!
 
   """The `Priority` that was updated by this mutation."""
   priority: Priority
@@ -6783,10 +6825,10 @@ type UpdatePriorityPayload {
   query: Query
 
   """Reads a single `Service` that is related to this `Priority`."""
-  serviceByYearValueAndServiceId: Service
+  serviceByYearValueAndServiceId: Service!
 
   """Reads a single `Year` that is related to this `Priority`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the `updateProgramByDegreeIdAndName` mutation."""
@@ -6854,7 +6896,7 @@ type UpdateProgramPayload {
   clientMutationId: String
 
   """Reads a single `Degree` that is related to this `Program`."""
-  degree: Degree
+  degree: Degree!
 
   """The `Program` that was updated by this mutation."""
   program: Program
@@ -6901,8 +6943,6 @@ input UpdateRequestByServiceIdAndCourseIdAndTypeInput {
   An object where the defined keys will be set on the `Request` being updated.
   """
   patch: RequestPatch!
-
-  """Associated teacher service record"""
   serviceId: Int!
 
   """Type of request (primary choice, backup, or final assignment)"""
@@ -6935,7 +6975,7 @@ type UpdateRequestPayload {
   clientMutationId: String
 
   """Reads a single `Course` that is related to this `Request`."""
-  courseByYearValueAndCourseId: Course
+  courseByYearValueAndCourseId: Course!
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -6946,10 +6986,13 @@ type UpdateRequestPayload {
   request: Request
 
   """Reads a single `Service` that is related to this `Request`."""
-  serviceByYearValueAndServiceId: Service
+  serviceByYearValueAndServiceId: Service!
+
+  """Reads a single `VService` that is related to this `Request`."""
+  vServiceByServiceId: VService!
 
   """Reads a single `Year` that is related to this `Request`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the `updateRoleByNodeId` mutation."""
@@ -7025,7 +7068,7 @@ type UpdateRolePayload {
   role: Role
 
   """Reads a single `Teacher` that is related to this `Role`."""
-  teacher: Teacher
+  teacher: Teacher!
 }
 
 """All input for the `updateServiceByIdAndYearValue` mutation."""
@@ -7156,7 +7199,7 @@ type UpdateServiceModificationPayload {
   """
   Reads a single `Service` that is related to this `ServiceModification`.
   """
-  service: Service
+  service: Service!
 
   """The `ServiceModification` that was updated by this mutation."""
   serviceModification: ServiceModification
@@ -7164,7 +7207,7 @@ type UpdateServiceModificationPayload {
   """
   Reads a single `ServiceModificationType` that is related to this `ServiceModification`.
   """
-  type: ServiceModificationType
+  type: ServiceModificationType!
 }
 
 """All input for the `updateServiceModificationTypeByLabel` mutation."""
@@ -7254,10 +7297,10 @@ type UpdateServicePayload {
   service: Service
 
   """Reads a single `Teacher` that is related to this `Service`."""
-  teacher: Teacher
+  teacher: Teacher!
 
   """Reads a single `Year` that is related to this `Service`."""
-  year: Year
+  year: Year!
 }
 
 """All input for the `updateTeacherByNodeId` mutation."""
@@ -7403,7 +7446,7 @@ type UpdateTrackPayload {
   clientMutationId: String
 
   """Reads a single `Program` that is related to this `Track`."""
-  program: Program
+  program: Program!
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -7467,10 +7510,34 @@ type UpdateYearPayload {
   year: Year
 }
 
+"""Non-sensitive service data for general user access"""
 type VService {
   id: Int
-  uid: String
-  yearValue: Int
+
+  """Reads and enables pagination through a set of `Request`."""
+  requestsByServiceId(
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: RequestCondition
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Request`."""
+    orderBy: [RequestsOrderBy!]
+  ): [Request!]!
+  uid: String!
+
+  """Reads a single `VTeacher` that is related to this `VService`."""
+  vTeacherByUid: VTeacher!
+
+  """Reads a single `Year` that is related to this `VService`."""
+  year: Year!
+  yearValue: Int!
 }
 
 """
@@ -7491,8 +7558,8 @@ input VServiceCondition {
 """An input for mutations affecting `VService`"""
 input VServiceInput {
   id: Int
-  uid: String
-  yearValue: Int
+  uid: String!
+  yearValue: Int!
 }
 
 """Methods to use when ordering `VService`."""
@@ -7506,12 +7573,30 @@ enum VServicesOrderBy {
   YEAR_VALUE_DESC
 }
 
+"""Non-sensitive teacher data for general user access"""
 type VTeacher {
   alias: String
-  displayname: String
+  displayname: String!
   firstname: String
   lastname: String
-  uid: String
+  uid: String!
+
+  """Reads and enables pagination through a set of `VService`."""
+  vServicesByUid(
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: VServiceCondition
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `VService`."""
+    orderBy: [VServicesOrderBy!]
+  ): [VService!]!
   visible: Boolean
 }
 
@@ -7542,10 +7627,10 @@ input VTeacherCondition {
 """An input for mutations affecting `VTeacher`"""
 input VTeacherInput {
   alias: String
-  displayname: String
+  displayname: String!
   firstname: String
   lastname: String
-  uid: String
+  uid: String!
   visible: Boolean
 }
 
@@ -7655,6 +7740,23 @@ type Year implements Node {
   Timestamp when the record was last updated, automatically managed by trigger
   """
   updatedAt: Datetime!
+
+  """Reads and enables pagination through a set of `VService`."""
+  vServicesByYearValue(
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: VServiceCondition
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `VService`."""
+    orderBy: [VServicesOrderBy!]
+  ): [VService!]!
 
   """Academic year identifier (e.g., 2024 for 2024-2025 academic year)"""
   value: Int!

@@ -13,6 +13,7 @@ import { PostGraphileAmberPreset } from "postgraphile/presets/amber";
 import { makeV4Preset } from "postgraphile/presets/v4";
 
 import { ConfigService } from "../config/config.service";
+import { NonNullRelationsPlugin } from "./non-null-relations.plugin";
 
 @Injectable()
 export class GraphqlService implements OnModuleInit {
@@ -36,6 +37,8 @@ export class GraphqlService implements OnModuleInit {
         // Remove "List" suffix from collection names
         pgOmitListSuffix: true,
       },
+
+      plugins: [NonNullRelationsPlugin],
 
       pgServices: [
         makePgService({

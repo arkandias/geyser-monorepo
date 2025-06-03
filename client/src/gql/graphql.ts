@@ -202,7 +202,7 @@ export type Coordination = Node & {
   /** Program being coordinated (mutually exclusive with track_id and course_id) */
   programId?: Maybe<Scalars['Int']['output']>;
   /** Reads a single `Teacher` that is related to this `Coordination`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Reads a single `Track` that is related to this `Coordination`. */
   track?: Maybe<Track>;
   /** Track being coordinated (mutually exclusive with program_id and course_id) */
@@ -356,7 +356,7 @@ export type Course = Node & {
   /** Priority duration in years (1=none, 0=permanent, NULL=disabled) */
   priorityRule?: Maybe<Scalars['Int']['output']>;
   /** Reads a single `Program` that is related to this `Course`. */
-  program?: Maybe<Program>;
+  program: Program;
   /** Program offering this course */
   programId: Scalars['Int']['output'];
   /** Reads and enables pagination through a set of `Request`. */
@@ -368,7 +368,7 @@ export type Course = Node & {
   /** Reads a single `Track` that is related to this `Course`. */
   trackProgram?: Maybe<Track>;
   /** Reads a single `CourseType` that is related to this `Course`. */
-  type?: Maybe<CourseType>;
+  type: CourseType;
   /** Reference to course delivery type affecting workload calculation */
   typeId: Scalars['Int']['output'];
   /** Timestamp when the record was last updated, automatically managed by trigger */
@@ -376,7 +376,7 @@ export type Course = Node & {
   /** Controls course visibility in the user interface and queries */
   visible: Scalars['Boolean']['output'];
   /** Reads a single `Year` that is related to this `Course`. */
-  year?: Maybe<Year>;
+  year: Year;
   /** Academic year when the course is offered */
   yearValue: Scalars['Int']['output'];
 };
@@ -740,7 +740,7 @@ export type CreateCoordinationPayload = {
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Teacher` that is related to this `Coordination`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Reads a single `Track` that is related to this `Coordination`. */
   track?: Maybe<Track>;
 };
@@ -767,15 +767,15 @@ export type CreateCoursePayload = {
   /** The `Course` that was created by this mutation. */
   course?: Maybe<Course>;
   /** Reads a single `Program` that is related to this `Course`. */
-  program?: Maybe<Program>;
+  program: Program;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Track` that is related to this `Course`. */
   trackProgram?: Maybe<Track>;
   /** Reads a single `CourseType` that is related to this `Course`. */
-  type?: Maybe<CourseType>;
+  type: CourseType;
   /** Reads a single `Year` that is related to this `Course`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the create `CourseType` mutation. */
@@ -898,15 +898,15 @@ export type CreatePriorityPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Course` that is related to this `Priority`. */
-  courseByYearValueAndCourseId?: Maybe<Course>;
+  courseByYearValueAndCourseId: Course;
   /** The `Priority` that was created by this mutation. */
   priority?: Maybe<Priority>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Service` that is related to this `Priority`. */
-  serviceByYearValueAndServiceId?: Maybe<Service>;
+  serviceByYearValueAndServiceId: Service;
   /** Reads a single `Year` that is related to this `Priority`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the create `Program` mutation. */
@@ -929,7 +929,7 @@ export type CreateProgramPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Degree` that is related to this `Program`. */
-  degree?: Maybe<Degree>;
+  degree: Degree;
   /** The `Program` that was created by this mutation. */
   program?: Maybe<Program>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -956,15 +956,17 @@ export type CreateRequestPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Course` that is related to this `Request`. */
-  courseByYearValueAndCourseId?: Maybe<Course>;
+  courseByYearValueAndCourseId: Course;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** The `Request` that was created by this mutation. */
   request?: Maybe<Request>;
   /** Reads a single `Service` that is related to this `Request`. */
-  serviceByYearValueAndServiceId?: Maybe<Service>;
+  serviceByYearValueAndServiceId: Service;
+  /** Reads a single `VService` that is related to this `Request`. */
+  vServiceByServiceId: VService;
   /** Reads a single `Year` that is related to this `Request`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the create `Role` mutation. */
@@ -991,7 +993,7 @@ export type CreateRolePayload = {
   /** The `Role` that was created by this mutation. */
   role?: Maybe<Role>;
   /** Reads a single `Teacher` that is related to this `Role`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
 };
 
 /** All input for the create `Service` mutation. */
@@ -1027,11 +1029,11 @@ export type CreateServiceModificationPayload = {
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Service` that is related to this `ServiceModification`. */
-  service?: Maybe<Service>;
+  service: Service;
   /** The `ServiceModification` that was created by this mutation. */
   serviceModification?: Maybe<ServiceModification>;
   /** Reads a single `ServiceModificationType` that is related to this `ServiceModification`. */
-  type?: Maybe<ServiceModificationType>;
+  type: ServiceModificationType;
 };
 
 /** All input for the create `ServiceModificationType` mutation. */
@@ -1072,9 +1074,9 @@ export type CreateServicePayload = {
   /** The `Service` that was created by this mutation. */
   service?: Maybe<Service>;
   /** Reads a single `Teacher` that is related to this `Service`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Reads a single `Year` that is related to this `Service`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the create `Teacher` mutation. */
@@ -1148,7 +1150,7 @@ export type CreateTrackPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Program` that is related to this `Track`. */
-  program?: Maybe<Program>;
+  program: Program;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** The `Track` that was created by this mutation. */
@@ -1178,6 +1180,10 @@ export type CreateVServicePayload = {
   query?: Maybe<Query>;
   /** The `VService` that was created by this mutation. */
   vService?: Maybe<VService>;
+  /** Reads a single `VTeacher` that is related to this `VService`. */
+  vTeacherByUid: VTeacher;
+  /** Reads a single `Year` that is related to this `VService`. */
+  year: Year;
 };
 
 /** All input for the create `VTeacher` mutation. */
@@ -1519,7 +1525,7 @@ export type DeleteCoordinationPayload = {
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Teacher` that is related to this `Coordination`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Reads a single `Track` that is related to this `Coordination`. */
   track?: Maybe<Track>;
 };
@@ -1592,15 +1598,15 @@ export type DeleteCoursePayload = {
   course?: Maybe<Course>;
   deletedCourseNodeId?: Maybe<Scalars['ID']['output']>;
   /** Reads a single `Program` that is related to this `Course`. */
-  program?: Maybe<Program>;
+  program: Program;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Track` that is related to this `Course`. */
   trackProgram?: Maybe<Track>;
   /** Reads a single `CourseType` that is related to this `Course`. */
-  type?: Maybe<CourseType>;
+  type: CourseType;
   /** Reads a single `Year` that is related to this `Course`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the `deleteCourseTypeByLabel` mutation. */
@@ -1828,16 +1834,16 @@ export type DeletePriorityPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Course` that is related to this `Priority`. */
-  courseByYearValueAndCourseId?: Maybe<Course>;
+  courseByYearValueAndCourseId: Course;
   deletedPriorityNodeId?: Maybe<Scalars['ID']['output']>;
   /** The `Priority` that was deleted by this mutation. */
   priority?: Maybe<Priority>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Service` that is related to this `Priority`. */
-  serviceByYearValueAndServiceId?: Maybe<Service>;
+  serviceByYearValueAndServiceId: Service;
   /** Reads a single `Year` that is related to this `Priority`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the `deleteProgramByDegreeIdAndName` mutation. */
@@ -1884,7 +1890,7 @@ export type DeleteProgramPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Degree` that is related to this `Program`. */
-  degree?: Maybe<Degree>;
+  degree: Degree;
   deletedProgramNodeId?: Maybe<Scalars['ID']['output']>;
   /** The `Program` that was deleted by this mutation. */
   program?: Maybe<Program>;
@@ -1912,7 +1918,6 @@ export type DeleteRequestByServiceIdAndCourseIdAndTypeInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** Requested or assigned course */
   courseId: Scalars['Int']['input'];
-  /** Associated teacher service record */
   serviceId: Scalars['Int']['input'];
   /** Type of request (primary choice, backup, or final assignment) */
   type: RequestType;
@@ -1938,16 +1943,18 @@ export type DeleteRequestPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Course` that is related to this `Request`. */
-  courseByYearValueAndCourseId?: Maybe<Course>;
+  courseByYearValueAndCourseId: Course;
   deletedRequestNodeId?: Maybe<Scalars['ID']['output']>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** The `Request` that was deleted by this mutation. */
   request?: Maybe<Request>;
   /** Reads a single `Service` that is related to this `Request`. */
-  serviceByYearValueAndServiceId?: Maybe<Service>;
+  serviceByYearValueAndServiceId: Service;
+  /** Reads a single `VService` that is related to this `Request`. */
+  vServiceByServiceId: VService;
   /** Reads a single `Year` that is related to this `Request`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the `deleteRoleByNodeId` mutation. */
@@ -1999,7 +2006,7 @@ export type DeleteRolePayload = {
   /** The `Role` that was deleted by this mutation. */
   role?: Maybe<Role>;
   /** Reads a single `Teacher` that is related to this `Role`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
 };
 
 /** All input for the `deleteServiceByIdAndYearValue` mutation. */
@@ -2084,11 +2091,11 @@ export type DeleteServiceModificationPayload = {
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Service` that is related to this `ServiceModification`. */
-  service?: Maybe<Service>;
+  service: Service;
   /** The `ServiceModification` that was deleted by this mutation. */
   serviceModification?: Maybe<ServiceModification>;
   /** Reads a single `ServiceModificationType` that is related to this `ServiceModification`. */
-  type?: Maybe<ServiceModificationType>;
+  type: ServiceModificationType;
 };
 
 /** All input for the `deleteServiceModificationTypeByLabel` mutation. */
@@ -2153,9 +2160,9 @@ export type DeleteServicePayload = {
   /** The `Service` that was deleted by this mutation. */
   service?: Maybe<Service>;
   /** Reads a single `Teacher` that is related to this `Service`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Reads a single `Year` that is related to this `Service`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the `deleteTeacherByNodeId` mutation. */
@@ -2255,7 +2262,7 @@ export type DeleteTrackPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   deletedTrackNodeId?: Maybe<Scalars['ID']['output']>;
   /** Reads a single `Program` that is related to this `Track`. */
-  program?: Maybe<Program>;
+  program: Program;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** The `Track` that was deleted by this mutation. */
@@ -2297,6 +2304,28 @@ export type DeleteYearPayload = {
   query?: Maybe<Query>;
   /** The `Year` that was deleted by this mutation. */
   year?: Maybe<Year>;
+};
+
+/** All input for the `dummyMutation` mutation. */
+export type DummyMutationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `dummyMutation` mutation. */
+export type DummyMutationPayload = {
+  __typename?: 'DummyMutationPayload';
+  boolean?: Maybe<Scalars['Boolean']['output']>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
 };
 
 /** The root mutation type which contains root level fields which mutate data. */
@@ -2452,6 +2481,8 @@ export type Mutation = {
   deleteYear?: Maybe<DeleteYearPayload>;
   /** Deletes a single `Year` using its globally unique id. */
   deleteYearByNodeId?: Maybe<DeleteYearPayload>;
+  /** Dummy mutation that does nothing */
+  dummyMutation?: Maybe<DummyMutationPayload>;
   /** Updates a single `AppSetting` using a unique key and a patch. */
   updateAppSetting?: Maybe<UpdateAppSettingPayload>;
   /** Updates a single `AppSetting` using its globally unique id and a patch. */
@@ -3004,6 +3035,12 @@ export type MutationDeleteYearByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDummyMutationArgs = {
+  input: DummyMutationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateAppSettingArgs = {
   input: UpdateAppSettingInput;
 };
@@ -3440,7 +3477,7 @@ export type Priority = Node & {
   /** Flag indicating whether the seniority value was automatically computed rather than manually assigned */
   computed: Scalars['Boolean']['output'];
   /** Reads a single `Course` that is related to this `Priority`. */
-  courseByYearValueAndCourseId?: Maybe<Course>;
+  courseByYearValueAndCourseId: Course;
   /** Course for which priority is tracked */
   courseId: Scalars['Int']['output'];
   /** Timestamp when the record was created */
@@ -3454,13 +3491,13 @@ export type Priority = Node & {
   /** Consecutive years teaching this course before current year */
   seniority?: Maybe<Scalars['Int']['output']>;
   /** Reads a single `Service` that is related to this `Priority`. */
-  serviceByYearValueAndServiceId?: Maybe<Service>;
+  serviceByYearValueAndServiceId: Service;
   /** Associated teacher service record */
   serviceId: Scalars['Int']['output'];
   /** Timestamp when the record was last updated, automatically managed by trigger */
   updatedAt: Scalars['Datetime']['output'];
   /** Reads a single `Year` that is related to this `Priority`. */
-  year?: Maybe<Year>;
+  year: Year;
   /** Year of the priority (must match service's and course's year) */
   yearValue: Scalars['Int']['output'];
 };
@@ -3540,7 +3577,7 @@ export type Program = Node & {
   /** Timestamp when the record was created */
   createdAt: Scalars['Datetime']['output'];
   /** Reads a single `Degree` that is related to this `Program`. */
-  degree?: Maybe<Degree>;
+  degree: Degree;
   /** Parent degree for this program */
   degreeId: Scalars['Int']['output'];
   /** Unique program identifier */
@@ -4310,27 +4347,30 @@ export type QueryYearsArgs = {
 export type Request = Node & {
   __typename?: 'Request';
   /** Reads a single `Course` that is related to this `Request`. */
-  courseByYearValueAndCourseId?: Maybe<Course>;
+  courseByYearValueAndCourseId: Course;
   /** Requested or assigned course */
   courseId: Scalars['Int']['output'];
   /** Timestamp when the record was created */
   createdAt: Scalars['Datetime']['output'];
   /** Requested or assigned teaching hours */
   hours: Scalars['Float']['output'];
+  hoursWeighted?: Maybe<Scalars['Float']['output']>;
   /** Unique request identifier */
   id: Scalars['Int']['output'];
+  isPriority?: Maybe<Scalars['Boolean']['output']>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
   /** Reads a single `Service` that is related to this `Request`. */
-  serviceByYearValueAndServiceId?: Maybe<Service>;
-  /** Associated teacher service record */
+  serviceByYearValueAndServiceId: Service;
   serviceId: Scalars['Int']['output'];
   /** Type of request (primary choice, backup, or final assignment) */
   type: RequestType;
   /** Timestamp when the record was last updated, automatically managed by trigger */
   updatedAt: Scalars['Datetime']['output'];
+  /** Reads a single `VService` that is related to this `Request`. */
+  vServiceByServiceId: VService;
   /** Reads a single `Year` that is related to this `Request`. */
-  year?: Maybe<Year>;
+  year: Year;
   /** Year of the request (must match service's and course's year) */
   yearValue: Scalars['Int']['output'];
 };
@@ -4363,7 +4403,6 @@ export type RequestInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Requested or assigned teaching hours */
   hours: Scalars['Float']['input'];
-  /** Associated teacher service record */
   serviceId: Scalars['Int']['input'];
   /** Type of request (primary choice, backup, or final assignment) */
   type: RequestType;
@@ -4381,7 +4420,6 @@ export type RequestPatch = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Requested or assigned teaching hours */
   hours?: InputMaybe<Scalars['Float']['input']>;
-  /** Associated teacher service record */
   serviceId?: InputMaybe<Scalars['Int']['input']>;
   /** Type of request (primary choice, backup, or final assignment) */
   type?: InputMaybe<RequestType>;
@@ -4435,7 +4473,7 @@ export type Role = Node & {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
   /** Reads a single `Teacher` that is related to this `Role`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Type of privileged role */
   type: RoleType;
   /** Teacher identifier with role access */
@@ -4536,13 +4574,13 @@ export type Service = Node & {
   /** Reads and enables pagination through a set of `ServiceModification`. */
   serviceModifications: Array<ServiceModification>;
   /** Reads a single `Teacher` that is related to this `Service`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Teacher identifier linking to teacher table */
   uid: Scalars['String']['output'];
   /** Timestamp when the record was last updated, automatically managed by trigger */
   updatedAt: Scalars['Datetime']['output'];
   /** Reads a single `Year` that is related to this `Service`. */
-  year?: Maybe<Year>;
+  year: Year;
   /** Academic year for this service record */
   yearValue: Scalars['Int']['output'];
 };
@@ -4620,11 +4658,11 @@ export type ServiceModification = Node & {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
   /** Reads a single `Service` that is related to this `ServiceModification`. */
-  service?: Maybe<Service>;
+  service: Service;
   /** Reference to affected service record */
   serviceId: Scalars['Int']['output'];
   /** Reads a single `ServiceModificationType` that is related to this `ServiceModification`. */
-  type?: Maybe<ServiceModificationType>;
+  type: ServiceModificationType;
   /** Reference to service modification type */
   typeId: Scalars['Int']['output'];
   /** Timestamp when the record was last updated, automatically managed by trigger */
@@ -5011,7 +5049,7 @@ export type Track = Node & {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
   /** Reads a single `Program` that is related to this `Track`. */
-  program?: Maybe<Program>;
+  program: Program;
   /** Parent program for this track */
   programId: Scalars['Int']['output'];
   /** Timestamp when the record was last updated, automatically managed by trigger */
@@ -5219,7 +5257,7 @@ export type UpdateCoordinationPayload = {
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Teacher` that is related to this `Coordination`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Reads a single `Track` that is related to this `Coordination`. */
   track?: Maybe<Track>;
 };
@@ -5299,15 +5337,15 @@ export type UpdateCoursePayload = {
   /** The `Course` that was updated by this mutation. */
   course?: Maybe<Course>;
   /** Reads a single `Program` that is related to this `Course`. */
-  program?: Maybe<Program>;
+  program: Program;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Track` that is related to this `Course`. */
   trackProgram?: Maybe<Track>;
   /** Reads a single `CourseType` that is related to this `Course`. */
-  type?: Maybe<CourseType>;
+  type: CourseType;
   /** Reads a single `Year` that is related to this `Course`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the `updateCourseTypeByLabel` mutation. */
@@ -5559,15 +5597,15 @@ export type UpdatePriorityPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Course` that is related to this `Priority`. */
-  courseByYearValueAndCourseId?: Maybe<Course>;
+  courseByYearValueAndCourseId: Course;
   /** The `Priority` that was updated by this mutation. */
   priority?: Maybe<Priority>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Service` that is related to this `Priority`. */
-  serviceByYearValueAndServiceId?: Maybe<Service>;
+  serviceByYearValueAndServiceId: Service;
   /** Reads a single `Year` that is related to this `Priority`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the `updateProgramByDegreeIdAndName` mutation. */
@@ -5620,7 +5658,7 @@ export type UpdateProgramPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Degree` that is related to this `Program`. */
-  degree?: Maybe<Degree>;
+  degree: Degree;
   /** The `Program` that was updated by this mutation. */
   program?: Maybe<Program>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -5651,7 +5689,6 @@ export type UpdateRequestByServiceIdAndCourseIdAndTypeInput = {
   courseId: Scalars['Int']['input'];
   /** An object where the defined keys will be set on the `Request` being updated. */
   patch: RequestPatch;
-  /** Associated teacher service record */
   serviceId: Scalars['Int']['input'];
   /** Type of request (primary choice, backup, or final assignment) */
   type: RequestType;
@@ -5679,15 +5716,17 @@ export type UpdateRequestPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Course` that is related to this `Request`. */
-  courseByYearValueAndCourseId?: Maybe<Course>;
+  courseByYearValueAndCourseId: Course;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** The `Request` that was updated by this mutation. */
   request?: Maybe<Request>;
   /** Reads a single `Service` that is related to this `Request`. */
-  serviceByYearValueAndServiceId?: Maybe<Service>;
+  serviceByYearValueAndServiceId: Service;
+  /** Reads a single `VService` that is related to this `Request`. */
+  vServiceByServiceId: VService;
   /** Reads a single `Year` that is related to this `Request`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the `updateRoleByNodeId` mutation. */
@@ -5744,7 +5783,7 @@ export type UpdateRolePayload = {
   /** The `Role` that was updated by this mutation. */
   role?: Maybe<Role>;
   /** Reads a single `Teacher` that is related to this `Role`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
 };
 
 /** All input for the `updateServiceByIdAndYearValue` mutation. */
@@ -5840,11 +5879,11 @@ export type UpdateServiceModificationPayload = {
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `Service` that is related to this `ServiceModification`. */
-  service?: Maybe<Service>;
+  service: Service;
   /** The `ServiceModification` that was updated by this mutation. */
   serviceModification?: Maybe<ServiceModification>;
   /** Reads a single `ServiceModificationType` that is related to this `ServiceModification`. */
-  type?: Maybe<ServiceModificationType>;
+  type: ServiceModificationType;
 };
 
 /** All input for the `updateServiceModificationTypeByLabel` mutation. */
@@ -5913,9 +5952,9 @@ export type UpdateServicePayload = {
   /** The `Service` that was updated by this mutation. */
   service?: Maybe<Service>;
   /** Reads a single `Teacher` that is related to this `Service`. */
-  teacher?: Maybe<Teacher>;
+  teacher: Teacher;
   /** Reads a single `Year` that is related to this `Service`. */
-  year?: Maybe<Year>;
+  year: Year;
 };
 
 /** All input for the `updateTeacherByNodeId` mutation. */
@@ -6025,7 +6064,7 @@ export type UpdateTrackPayload = {
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Reads a single `Program` that is related to this `Track`. */
-  program?: Maybe<Program>;
+  program: Program;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** The `Track` that was updated by this mutation. */
@@ -6072,11 +6111,27 @@ export type UpdateYearPayload = {
   year?: Maybe<Year>;
 };
 
+/** Non-sensitive service data for general user access */
 export type VService = {
   __typename?: 'VService';
   id?: Maybe<Scalars['Int']['output']>;
-  uid?: Maybe<Scalars['String']['output']>;
-  yearValue?: Maybe<Scalars['Int']['output']>;
+  /** Reads and enables pagination through a set of `Request`. */
+  requestsByServiceId: Array<Request>;
+  uid: Scalars['String']['output'];
+  /** Reads a single `VTeacher` that is related to this `VService`. */
+  vTeacherByUid: VTeacher;
+  /** Reads a single `Year` that is related to this `VService`. */
+  year: Year;
+  yearValue: Scalars['Int']['output'];
+};
+
+
+/** Non-sensitive service data for general user access */
+export type VServiceRequestsByServiceIdArgs = {
+  condition?: InputMaybe<RequestCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<RequestsOrderBy>>;
 };
 
 /**
@@ -6095,8 +6150,8 @@ export type VServiceCondition = {
 /** An input for mutations affecting `VService` */
 export type VServiceInput = {
   id?: InputMaybe<Scalars['Int']['input']>;
-  uid?: InputMaybe<Scalars['String']['input']>;
-  yearValue?: InputMaybe<Scalars['Int']['input']>;
+  uid: Scalars['String']['input'];
+  yearValue: Scalars['Int']['input'];
 };
 
 /** Methods to use when ordering `VService`. */
@@ -6110,14 +6165,26 @@ export enum VServicesOrderBy {
   YearValueDesc = 'YEAR_VALUE_DESC'
 }
 
+/** Non-sensitive teacher data for general user access */
 export type VTeacher = {
   __typename?: 'VTeacher';
   alias?: Maybe<Scalars['String']['output']>;
-  displayname?: Maybe<Scalars['String']['output']>;
+  displayname: Scalars['String']['output'];
   firstname?: Maybe<Scalars['String']['output']>;
   lastname?: Maybe<Scalars['String']['output']>;
-  uid?: Maybe<Scalars['String']['output']>;
+  uid: Scalars['String']['output'];
+  /** Reads and enables pagination through a set of `VService`. */
+  vServicesByUid: Array<VService>;
   visible?: Maybe<Scalars['Boolean']['output']>;
+};
+
+
+/** Non-sensitive teacher data for general user access */
+export type VTeacherVServicesByUidArgs = {
+  condition?: InputMaybe<VServiceCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<VServicesOrderBy>>;
 };
 
 /**
@@ -6142,10 +6209,10 @@ export type VTeacherCondition = {
 /** An input for mutations affecting `VTeacher` */
 export type VTeacherInput = {
   alias?: InputMaybe<Scalars['String']['input']>;
-  displayname?: InputMaybe<Scalars['String']['input']>;
+  displayname: Scalars['String']['input'];
   firstname?: InputMaybe<Scalars['String']['input']>;
   lastname?: InputMaybe<Scalars['String']['input']>;
-  uid?: InputMaybe<Scalars['String']['input']>;
+  uid: Scalars['String']['input'];
   visible?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -6185,6 +6252,8 @@ export type Year = Node & {
   servicesByYearValue: Array<Service>;
   /** Timestamp when the record was last updated, automatically managed by trigger */
   updatedAt: Scalars['Datetime']['output'];
+  /** Reads and enables pagination through a set of `VService`. */
+  vServicesByYearValue: Array<VService>;
   /** Academic year identifier (e.g., 2024 for 2024-2025 academic year) */
   value: Scalars['Int']['output'];
   /** Controls visibility of the year in the user interface and queries */
@@ -6225,6 +6294,15 @@ export type YearServicesByYearValueArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ServicesOrderBy>>;
+};
+
+
+/** Academic year definitions with current year designation and visibility settings */
+export type YearVServicesByYearValueArgs = {
+  condition?: InputMaybe<VServiceCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<VServicesOrderBy>>;
 };
 
 /** A condition to be used against `Year` object types. All fields are tested for equality and combined with a logical ‘and.’ */
@@ -6293,13 +6371,79 @@ export type GetAppDataQueryVariables = Exact<{
 
 export type GetAppDataQuery = { __typename?: 'Query', currentPhase?: { __typename?: 'CurrentPhase', value?: Phase | null } | null, years?: Array<{ __typename?: 'Year', value: number, current: boolean, visible: boolean }> | null, appSettings?: Array<{ __typename?: 'AppSetting', key: string, value?: string | null }> | null, services?: Array<{ __typename?: 'Service', id: number, year: number }> | null };
 
-export type DummyMutationMutationVariables = Exact<{
+export type CourseRowFragment = { __typename?: 'Course', id: number, visible: boolean, semester: number, name?: string | null, hoursPerGroup?: number | null, numberOfGroups?: number | null, program: { __typename?: 'Program', id: number, visible: boolean, name?: string | null, degree: { __typename?: 'Degree', visible: boolean, name?: string | null } }, track?: { __typename?: 'Track', visible: boolean, name?: string | null } | null, type: { __typename?: 'CourseType', label: string, coefficient: number }, requests: Array<{ __typename?: 'Request', serviceId: number, type: RequestType, hours: number, isPriority?: boolean | null }> } & { ' $fragmentName'?: 'CourseRowFragment' };
+
+export type TableCoursesVServiceFragment = { __typename?: 'VService', id?: number | null, teacher: { __typename?: 'VTeacher', displayname: string } } & { ' $fragmentName'?: 'TableCoursesVServiceFragment' };
+
+export type ServiceRowFragment = { __typename?: 'Service', id: number, hours: number, message?: string | null, teacher: { __typename?: 'Teacher', firstname: string, lastname: string, alias?: string | null, visible: boolean }, modifications: Array<{ __typename?: 'ServiceModification', hours: number }>, requests: Array<{ __typename?: 'Request', type: RequestType, hoursWeighted?: number | null }> } & { ' $fragmentName'?: 'ServiceRowFragment' };
+
+export type TeacherServiceDetailsFragment = { __typename?: 'Service', id: number, uid: string, yearValue: number, hours: number, modifications: Array<{ __typename?: 'ServiceModification', id: number, hours: number, modificationType: { __typename?: 'ServiceModificationType', label: string } }> } & { ' $fragmentName'?: 'TeacherServiceDetailsFragment' };
+
+export type UpdateServiceMutationVariables = Exact<{
+  year: Scalars['Int']['input'];
   uid: Scalars['String']['input'];
+  hours: Scalars['Float']['input'];
 }>;
 
 
-export type DummyMutationMutation = { __typename?: 'Mutation', updateTeacher?: { __typename?: 'UpdateTeacherPayload', clientMutationId?: string | null } | null };
+export type UpdateServiceMutation = { __typename?: 'Mutation', updateServiceByYearValueAndUid?: { __typename?: 'UpdateServicePayload', service?: { __typename?: 'Service', id: number } | null } | null };
+
+export type GetModificationTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
+export type GetModificationTypesQuery = { __typename?: 'Query', modificationTypes?: Array<{ __typename?: 'ServiceModificationType', id: number, label: string, description?: string | null }> | null };
+
+export type InsertModificationMutationVariables = Exact<{
+  serviceId: Scalars['Int']['input'];
+  modificationTypeId: Scalars['Int']['input'];
+  hours: Scalars['Float']['input'];
+}>;
+
+
+export type InsertModificationMutation = { __typename?: 'Mutation', createServiceModification?: { __typename?: 'CreateServiceModificationPayload', serviceModification?: { __typename?: 'ServiceModification', id: number } | null } | null };
+
+export type DeleteModificationMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteModificationMutation = { __typename?: 'Mutation', deleteServiceModification?: { __typename?: 'DeleteServiceModificationPayload', serviceModification?: { __typename?: 'ServiceModification', id: number } | null } | null };
+
+export type TeacherServiceMessageFragment = { __typename?: 'Service', id: number, uid: string, message?: string | null } & { ' $fragmentName'?: 'TeacherServiceMessageFragment' };
+
+export type UpdateMessageMutationVariables = Exact<{
+  serviceId: Scalars['Int']['input'];
+  message?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateMessageMutation = { __typename?: 'Mutation', updateService?: { __typename?: 'UpdateServicePayload', service?: { __typename?: 'Service', id: number } | null } | null };
+
+export type TeacherCoordinationsFragment = { __typename?: 'Teacher', coordinations: Array<{ __typename?: 'Coordination', id: number, comment?: string | null, program?: { __typename?: 'Program', id: number, name?: string | null, degree: { __typename?: 'Degree', name?: string | null } } | null, track?: { __typename?: 'Track', id: number, name?: string | null, program: { __typename?: 'Program', name?: string | null, degree: { __typename?: 'Degree', name?: string | null } } } | null, course?: { __typename?: 'Course', id: number, yearValue: number, name?: string | null, program: { __typename?: 'Program', name?: string | null, degree: { __typename?: 'Degree', name?: string | null } }, track?: { __typename?: 'Track', name?: string | null, program: { __typename?: 'Program', name?: string | null, degree: { __typename?: 'Degree', name?: string | null } } } | null } | null }> } & { ' $fragmentName'?: 'TeacherCoordinationsFragment' };
+
+export type GetRequestsQueryVariables = Exact<{
+  condition?: InputMaybe<RequestCondition>;
+}>;
+
+
+export type GetRequestsQuery = { __typename?: 'Query', requests?: Array<{ __typename?: 'Request', course: { __typename?: 'Course', id: number, semester: number, name?: string | null, program: { __typename?: 'Program', id: number, name?: string | null, degree: { __typename?: 'Degree', id: number, name?: string | null } }, track?: { __typename?: 'Track', id: number, name?: string | null, program: { __typename?: 'Program', id: number, name?: string | null, degree: { __typename?: 'Degree', id: number, name?: string | null } } } | null, type: { __typename?: 'CourseType', label: string } }, service: { __typename?: 'VService', teacher: { __typename?: 'VTeacher', uid: string, firstname?: string | null, lastname?: string | null, displayname: string } } }> | null };
+
+export type DummyMutationMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DummyMutationMutation = { __typename?: 'Mutation', dummyMutation?: { __typename?: 'DummyMutationPayload', clientMutationId?: string | null } | null };
+
+export const CourseRowFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CourseRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Course"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"visible"}},{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"degree"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"visible"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"visible"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"track"},"name":{"kind":"Name","value":"trackProgram"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"visible"}}]}},{"kind":"Field","name":{"kind":"Name","value":"semester"}},{"kind":"Field","name":{"kind":"Name","value":"type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"coefficient"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"hoursPerGroup"},"name":{"kind":"Name","value":"hoursEffective"}},{"kind":"Field","alias":{"kind":"Name","value":"numberOfGroups"},"name":{"kind":"Name","value":"groupsEffective"}},{"kind":"Field","alias":{"kind":"Name","value":"requests"},"name":{"kind":"Name","value":"requestsByYearValueAndCourseId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"serviceId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"hours"}},{"kind":"Field","name":{"kind":"Name","value":"isPriority"}}]}}]}}]} as unknown as DocumentNode<CourseRowFragment, unknown>;
+export const TableCoursesVServiceFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TableCoursesVService"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"VService"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"teacher"},"name":{"kind":"Name","value":"vTeacherByUid"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"displayname"}}]}}]}}]} as unknown as DocumentNode<TableCoursesVServiceFragment, unknown>;
+export const ServiceRowFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ServiceRow"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"teacher"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstname"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}},{"kind":"Field","name":{"kind":"Name","value":"alias"}},{"kind":"Field","name":{"kind":"Name","value":"visible"}}]}},{"kind":"Field","name":{"kind":"Name","value":"hours"}},{"kind":"Field","alias":{"kind":"Name","value":"modifications"},"name":{"kind":"Name","value":"serviceModifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hours"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"requests"},"name":{"kind":"Name","value":"requestsByYearValueAndServiceId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"hoursWeighted"}}]}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]} as unknown as DocumentNode<ServiceRowFragment, unknown>;
+export const TeacherServiceDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TeacherServiceDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"uid"}},{"kind":"Field","name":{"kind":"Name","value":"yearValue"}},{"kind":"Field","name":{"kind":"Name","value":"hours"}},{"kind":"Field","alias":{"kind":"Name","value":"modifications"},"name":{"kind":"Name","value":"serviceModifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"TYPE_ID_ASC"},{"kind":"EnumValue","value":"HOURS_ASC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"modificationType"},"name":{"kind":"Name","value":"type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"label"}}]}},{"kind":"Field","name":{"kind":"Name","value":"hours"}}]}}]}}]} as unknown as DocumentNode<TeacherServiceDetailsFragment, unknown>;
+export const TeacherServiceMessageFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TeacherServiceMessage"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"uid"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]} as unknown as DocumentNode<TeacherServiceMessageFragment, unknown>;
+export const TeacherCoordinationsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TeacherCoordinations"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Teacher"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"coordinations"},"name":{"kind":"Name","value":"coordinationsByUid"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"PROGRAM_ID_ASC"},{"kind":"EnumValue","value":"TRACK_ID_ASC"},{"kind":"EnumValue","value":"COURSE_ID_ASC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"degree"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"track"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"degree"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"course"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"yearValue"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"degree"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"track"},"name":{"kind":"Name","value":"trackProgram"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"degree"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"comment"}}]}}]}}]} as unknown as DocumentNode<TeacherCoordinationsFragment, unknown>;
 export const GetAppDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAppData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentPhase"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}}]}},{"kind":"Field","name":{"kind":"Name","value":"years"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"VALUE_DESC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"current"}},{"kind":"Field","name":{"kind":"Name","value":"visible"}}]}},{"kind":"Field","name":{"kind":"Name","value":"appSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"KEY_ASC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}},{"kind":"Field","name":{"kind":"Name","value":"services"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"uid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uid"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"year"},"name":{"kind":"Name","value":"yearValue"}}]}}]}}]} as unknown as DocumentNode<GetAppDataQuery, GetAppDataQueryVariables>;
-export const DummyMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DummyMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateTeacher"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"uid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uid"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"patch"},"value":{"kind":"ObjectValue","fields":[]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clientMutationId"}}]}}]}}]} as unknown as DocumentNode<DummyMutationMutation, DummyMutationMutationVariables>;
+export const UpdateServiceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateService"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"year"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hours"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateServiceByYearValueAndUid"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"yearValue"},"value":{"kind":"Variable","name":{"kind":"Name","value":"year"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"uid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uid"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"patch"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"hours"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hours"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"service"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateServiceMutation, UpdateServiceMutationVariables>;
+export const GetModificationTypesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModificationTypes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"modificationTypes"},"name":{"kind":"Name","value":"serviceModificationTypes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"LABEL_ASC"}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<GetModificationTypesQuery, GetModificationTypesQueryVariables>;
+export const InsertModificationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertModification"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"serviceId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modificationTypeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hours"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createServiceModification"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"serviceModification"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"serviceId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"serviceId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"typeId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modificationTypeId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"hours"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hours"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"serviceModification"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<InsertModificationMutation, InsertModificationMutationVariables>;
+export const DeleteModificationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteModification"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteServiceModification"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"serviceModification"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteModificationMutation, DeleteModificationMutationVariables>;
+export const UpdateMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"serviceId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"message"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateService"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"serviceId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"patch"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"message"},"value":{"kind":"Variable","name":{"kind":"Name","value":"message"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"service"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateMessageMutation, UpdateMessageMutationVariables>;
+export const GetRequestsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRequests"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"condition"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequestCondition"}},"defaultValue":{"kind":"ObjectValue","fields":[]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"requests"},"name":{"kind":"Name","value":"requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"condition"},"value":{"kind":"Variable","name":{"kind":"Name","value":"condition"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"course"},"name":{"kind":"Name","value":"courseByYearValueAndCourseId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"degree"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"track"},"name":{"kind":"Name","value":"trackProgram"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"degree"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"name"},"name":{"kind":"Name","value":"nameDisplay"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"semester"}},{"kind":"Field","name":{"kind":"Name","value":"type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"label"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"service"},"name":{"kind":"Name","value":"vServiceByServiceId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"teacher"},"name":{"kind":"Name","value":"vTeacherByUid"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uid"}},{"kind":"Field","name":{"kind":"Name","value":"firstname"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}},{"kind":"Field","name":{"kind":"Name","value":"displayname"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRequestsQuery, GetRequestsQueryVariables>;
+export const DummyMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DummyMutation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dummyMutation"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clientMutationId"}}]}}]}}]} as unknown as DocumentNode<DummyMutationMutation, DummyMutationMutationVariables>;

@@ -27,9 +27,9 @@ graphql(`
   fragment TeacherServiceDetails on Service {
     id
     uid
-    year
+    yearValue
     hours
-    modifications(orderBy: [{ type: { label: ASC } }, { hours: ASC }]) {
+    modifications: serviceModifications(orderBy: [TYPE_ID_ASC, HOURS_ASC]) {
       id
       modificationType: type {
         label
@@ -39,18 +39,17 @@ graphql(`
   }
 
   mutation UpdateService($year: Int!, $uid: String!, $hours: Float!) {
-    services: updateService(
-      where: { year: { _eq: $year }, uid: { _eq: $uid } }
-      _set: { hours: $hours }
+    updateServiceByYearValueAndUid(
+      input: { yearValue: $year, uid: $uid, patch: { hours: $hours } }
     ) {
-      returning {
+      service {
         id
       }
     }
   }
 
   query GetModificationTypes {
-    modificationTypes: serviceModificationType(orderBy: { label: ASC }) {
+    modificationTypes: serviceModificationTypes(orderBy: [LABEL_ASC]) {
       id
       label
       description
@@ -62,20 +61,26 @@ graphql(`
     $modificationTypeId: Int!
     $hours: Float!
   ) {
-    serviceModification: insertServiceModificationOne(
-      object: {
-        serviceId: $serviceId
-        typeId: $modificationTypeId
-        hours: $hours
+    createServiceModification(
+      input: {
+        serviceModification: {
+          serviceId: $serviceId
+          typeId: $modificationTypeId
+          hours: $hours
+        }
       }
     ) {
-      id
+      serviceModification {
+        id
+      }
     }
   }
 
   mutation DeleteModification($id: Int!) {
-    serviceModification: deleteServiceModificationByPk(id: $id) {
-      id
+    deleteServiceModification(input: { id: $id }) {
+      serviceModification {
+        id
+      }
     }
   }
 `);
@@ -118,11 +123,11 @@ const submitBaseServiceForm = async (): Promise<void> => {
     });
   } else {
     const { data, error } = await updateService.executeMutation({
-      year: service.value.year,
+      year: service.value.yearValue,
       uid: service.value.uid,
       hours: baseServiceHours.value,
     });
-    if (data?.services?.returning[0] && !error) {
+    if (data?.updateServiceByYearValueAndUid?.service?.id && !error) {
       notify(NotifyType.Success, {
         message: t("service.details.baseServiceForm.success"),
       });
@@ -175,7 +180,7 @@ const submitModificationForm = async (): Promise<void> => {
     modificationTypeId: modificationTypeId.value,
     hours: modificationHours.value,
   });
-  if (data?.serviceModification && !error) {
+  if (data?.createServiceModification && !error) {
     notify(NotifyType.Success, {
       message: t("service.details.modificationForm.success.create"),
     });
@@ -190,7 +195,7 @@ const submitModificationForm = async (): Promise<void> => {
 
 const handleModificationDeletion = async (id: number): Promise<void> => {
   const { data, error } = await deleteModification.executeMutation({ id });
-  if (data?.serviceModification && !error) {
+  if (data?.deleteServiceModification && !error) {
     notify(NotifyType.Success, {
       message: t("service.details.modificationForm.success.delete"),
     });

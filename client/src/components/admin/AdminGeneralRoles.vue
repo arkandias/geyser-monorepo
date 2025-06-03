@@ -27,7 +27,7 @@ import type {
   RowDescriptorExtra,
   Scalar,
 } from "@/types/data.ts";
-import { isRole } from "@/utils/enum-guards.ts";
+import { isRole } from "@/utils";
 
 import AdminData from "@/components/admin/core/AdminData.vue";
 

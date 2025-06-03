@@ -107,15 +107,19 @@ COMMENT ON COLUMN public.teacher.base_service_hours IS 'Individual override for 
 COMMENT ON COLUMN public.teacher.visible IS 'Controls teacher visibility in the user interface and queries';
 COMMENT ON COLUMN public.teacher.active IS 'Controls system access and automatic service creation for upcoming years';
 
--- View exposing only non-sensitive service data for general user access
 CREATE VIEW public.v_teacher AS
 SELECT uid,
        firstname,
        lastname,
        alias,
-       displayname,
-       visible
+       displayname
 FROM public.teacher;
+
+COMMENT ON VIEW public.v_teacher IS 'Non-sensitive teacher data for general user access';
+COMMENT ON COLUMN public.v_teacher.uid IS '@notNull';
+COMMENT ON COLUMN public.v_teacher.firstname IS '@notNull';
+COMMENT ON COLUMN public.v_teacher.lastname IS '@notNull';
+COMMENT ON COLUMN public.v_teacher.displayname IS '@notNull';
 
 CREATE TABLE public.service
 (
@@ -137,12 +141,18 @@ COMMENT ON COLUMN public.service.uid IS 'Teacher identifier linking to teacher t
 COMMENT ON COLUMN public.service.hours IS 'Required teaching hours for the year before modifications';
 COMMENT ON COLUMN public.service.message IS 'Optional message from teacher to course assignment committee';
 
--- View exposing only non-sensitive service data for general user access
 CREATE VIEW public.v_service AS
 SELECT id,
        year_value,
        uid
 FROM public.service;
+
+COMMENT ON VIEW public.v_service IS '
+@foreignKey (year_value) references year (value)
+@foreignKey (uid) references v_teacher (uid)
+Non-sensitive service data for general user access';
+COMMENT ON COLUMN public.v_service.year_value IS '@notNull';
+COMMENT ON COLUMN public.v_service.uid IS '@notNull';
 
 CREATE TABLE public.service_modification_type
 (
@@ -278,7 +288,7 @@ COMMENT ON COLUMN public.course_type.description IS 'Description of the course t
 CREATE TABLE public.course
 (
     id               integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    year_value             integer NOT NULL REFERENCES public.year ON UPDATE CASCADE,
+    year_value       integer NOT NULL REFERENCES public.year ON UPDATE CASCADE,
     program_id       integer NOT NULL REFERENCES public.program ON UPDATE CASCADE,
     track_id         integer,
     name             text    NOT NULL,
@@ -298,7 +308,7 @@ CREATE TABLE public.course
     visible          boolean NOT NULL DEFAULT TRUE,
     FOREIGN KEY (track_id, program_id) REFERENCES public.track (id, program_id) ON UPDATE CASCADE,
     UNIQUE NULLS NOT DISTINCT (year_value, program_id, track_id, name, semester, type_id),
-    UNIQUE (id, year_value),        -- referenced in requests and priorities to ensure data consistency
+    UNIQUE (id, year_value),  -- referenced in requests and priorities to ensure data consistency
     CONSTRAINT course_hours_non_negative_check CHECK (hours >= 0),
     CONSTRAINT course_groups_non_negative_check CHECK (groups >= 0),
     CONSTRAINT course_priority_rule_non_negative_check CHECK (priority_rule >= 0)
@@ -361,7 +371,7 @@ COMMENT ON COLUMN public.coordination.comment IS 'Additional coordination detail
 CREATE TABLE public.priority
 (
     id          integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    year_value        integer NOT NULL REFERENCES public.year ON UPDATE CASCADE,
+    year_value  integer NOT NULL REFERENCES public.year ON UPDATE CASCADE,
     service_id  integer NOT NULL,
     course_id   integer NOT NULL,
     seniority   integer,
@@ -398,7 +408,7 @@ COMMENT ON COLUMN public.request_type.description IS 'Description of the request
 CREATE TABLE public.request
 (
     id         integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    year_value       integer NOT NULL REFERENCES public.year ON UPDATE CASCADE,
+    year_value integer NOT NULL REFERENCES public.year ON UPDATE CASCADE,
     service_id integer NOT NULL,
     course_id  integer NOT NULL,
     type       text    NOT NULL REFERENCES public.request_type ON UPDATE CASCADE,
@@ -413,7 +423,9 @@ CREATE INDEX idx_request_year_service_id ON public.request (year_value, service_
 CREATE INDEX idx_request_year_course_id ON public.request (year_value, course_id);
 CREATE INDEX idx_request_type ON public.request (type);
 
-COMMENT ON TABLE public.request IS 'Teacher requests and assignments for courses';
+COMMENT ON TABLE public.request IS '
+@foreignKey (service_id) references v_service (id)
+Teacher requests and assignments for courses';
 COMMENT ON COLUMN public.request.id IS 'Unique request identifier';
 COMMENT ON COLUMN public.request.year_value IS 'Year of the request (must match service''s and course''s year)';
 COMMENT ON COLUMN public.request.service_id IS 'Associated teacher service record';
@@ -422,29 +434,36 @@ COMMENT ON COLUMN public.request.type IS 'Type of request (primary choice, backu
 COMMENT ON COLUMN public.request.hours IS 'Requested or assigned teaching hours';
 
 -- Computed field
-CREATE FUNCTION public.hours_weighted(request_row request) RETURNS real AS
+CREATE FUNCTION public.request_hours_weighted(request_row request) RETURNS real AS
 $$
 SELECT request_row.hours * ct.coefficient
 FROM public.course c
          JOIN public.course_type ct ON ct.id = c.type_id
 WHERE c.id = request_row.course_id;
 $$ LANGUAGE sql STABLE;
-COMMENT ON FUNCTION public.hours_weighted(request) IS 'Calculates weighted hours for a request by multiplying the requested hours by the course type coefficient';
+COMMENT ON FUNCTION public.request_hours_weighted(request) IS 'Calculates weighted hours for a request by multiplying the requested hours by the course type coefficient';
 
 -- Computed field
-CREATE FUNCTION public.is_priority(request_row request) RETURNS boolean AS
+CREATE FUNCTION public.request_is_priority(request_row request) RETURNS boolean AS
 $$
 SELECT is_priority
 FROM public.priority
 WHERE service_id = request_row.service_id
   AND course_id = request_row.course_id;
 $$ LANGUAGE sql STABLE;
-COMMENT ON FUNCTION public.is_priority(request) IS 'Determines the priority status of a request based on teaching history and course priority rules';
+COMMENT ON FUNCTION public.request_is_priority(request) IS 'Determines the priority status of a request based on teaching history and course priority rules';
 
 
 --
 -- Functions
 --
+
+CREATE FUNCTION public.dummy_mutation() RETURNS boolean AS
+$$
+SELECT TRUE;
+$$ LANGUAGE sql VOLATILE;
+
+COMMENT ON FUNCTION public.dummy_mutation() IS 'Dummy mutation that does nothing';
 
 CREATE FUNCTION public.create_teacher_service(p_year integer, p_uid text) RETURNS setof public.service AS
 $$

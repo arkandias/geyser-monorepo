@@ -12,7 +12,7 @@ import {
 } from "@/config/constants.ts";
 import { apiUrl } from "@/config/env.ts";
 import { RoleType as RoleTypeEnum } from "@/gql/graphql.ts";
-import { capitalize, toLowerCase } from "@/utils/misc.ts";
+import { capitalize, toLowerCase } from "@/utils";
 
 const api = axios.create({
   baseURL: apiUrl.href,

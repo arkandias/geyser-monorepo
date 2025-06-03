@@ -26,11 +26,10 @@ graphql(`
   }
 
   mutation UpdateMessage($serviceId: Int!, $message: String) {
-    service: updateServiceByPk(
-      pkColumns: { id: $serviceId }
-      _set: { message: $message }
-    ) {
-      id
+    updateService(input: { id: $serviceId, patch: { message: $message } }) {
+      service {
+        id
+      }
     }
   }
 `);
@@ -54,7 +53,7 @@ const setMessage = computed(
         message: message || null,
       })
       .then((result) => ({
-        returnId: result.data?.service?.id ?? null,
+        returnId: result.data?.updateService?.service?.id ?? null,
         error: result.error,
       })),
 );

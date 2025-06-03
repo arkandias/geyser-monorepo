@@ -169,7 +169,7 @@ importers:
         version: 0.0.1-beta.32(@dataplan/json@0.0.1-beta.30(grafast@0.1.1-beta.21(@envelop/core@5.2.3)(graphql@16.11.0)(tamedevil@0.0.0-beta.7)))(grafast@0.1.1-beta.21(@envelop/core@5.2.3)(graphql@16.11.0)(tamedevil@0.0.0-beta.7))(graphile-config@0.0.1-beta.15)(pg-sql2@5.0.0-beta.8)(pg@8.16.0)
       '@geyser/shared':
         specifier: workspace:*
-        version: link:../shared
+        version: file:shared
       '@graphile/simplify-inflection':
         specifier: 8.0.0-beta.6
         version: 8.0.0-beta.6
@@ -635,6 +635,9 @@ packages:
 
   '@fastify/busboy@3.1.1':
     resolution: {integrity: sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw==}
+
+  '@geyser/shared@file:shared':
+    resolution: {directory: shared, type: directory}
 
   '@graphile/lru@5.0.0-beta.3':
     resolution: {integrity: sha512-atoHRmLuYMCoMeCjS1pIA442eqAHwFZ3+bnjm3Mn+kAvujyXzGs8uup39gfmMgxOFjRAPNmPEiPw2oJUbOk65Q==}
@@ -4865,6 +4868,10 @@ snapshots:
       levn: 0.4.1
 
   '@fastify/busboy@3.1.1': {}
+
+  '@geyser/shared@file:shared':
+    dependencies:
+      zod: 3.25.46
 
   '@graphile/lru@5.0.0-beta.3':
     dependencies:

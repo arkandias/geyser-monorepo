@@ -5,8 +5,8 @@ import { graphql } from "@/gql";
 import { DummyMutationDocument } from "@/gql/graphql.ts";
 
 graphql(`
-  mutation DummyMutation($uid: String!) {
-    updateTeacher(input: { uid: $uid, patch: {} }) {
+  mutation DummyMutation {
+    dummyMutation(input: {}) {
       clientMutationId
     }
   }
@@ -18,11 +18,7 @@ export const useRefreshData = () => {
 
   const refreshData = async (): Promise<void> => {
     isRefreshing.value = true;
-    await dummyMutation.executeMutation(
-      // TODO: fix that (real dummy function)
-      { uid: "" },
-      { additionalTypenames: ["All"] },
-    );
+    await dummyMutation.executeMutation({}, { additionalTypenames: ["All"] });
     isRefreshing.value = false;
   };
 

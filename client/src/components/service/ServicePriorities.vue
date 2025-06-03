@@ -8,7 +8,7 @@ import {
   TeacherServicePrioritiesFragmentDoc,
 } from "@/gql/graphql.ts";
 import type { ArrayElement } from "@/types/misc.ts";
-import { priorityColor } from "@/utils/colors.ts";
+import { priorityColor } from "@/utils";
 
 import DetailsSection from "@/components/core/DetailsSection.vue";
 import ServiceList from "@/components/service/ServiceList.vue";
@@ -19,8 +19,8 @@ const { dataFragment } = defineProps<{
 
 graphql(`
   fragment TeacherServicePriorities on Service {
-    priorities(
-      where: { isPriority: { _isNull: false } }
+    prioritiesByYearValueAndServiceId(
+      condition: { isPriority: null }
       orderBy: [
         { course: { semester: ASC } }
         { course: { type: { label: ASC } } }

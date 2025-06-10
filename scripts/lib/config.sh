@@ -8,6 +8,7 @@ readonly GEYSER_ENV_VARS=(
     "GEYSER_TAG"
     "GEYSER_LOG_LEVEL"
     "GEYSER_AS_SERVICE"
+    "API_ORGANIZATION_KEY=univ-lille-dpt-math"
 )
 
 readonly REQUIRED_ENV_VARS=(
@@ -183,8 +184,6 @@ _env_summary() {
     debug "GEYSER_AS_SERVICE=${GEYSER_AS_SERVICE}"
     debug "GEYSER_ORIGIN=${GEYSER_ORIGIN}"
     debug "API_URL=${API_URL}"
-    debug "KC_HOSTNAME=${KC_HOSTNAME}"
-    debug "KC_HOSTNAME_ADMIN=${KC_HOSTNAME_ADMIN}"
     debug "======================================="
 }
 

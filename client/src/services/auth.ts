@@ -15,7 +15,7 @@ import { RoleEnum } from "@/gql/graphql.ts";
 import { capitalize, toLowerCase } from "@/utils";
 
 const api = axios.create({
-  baseURL: apiUrl.href,
+  baseURL: apiUrl,
   timeout: API_REQUEST_TIMEOUT,
   withCredentials: true,
 });

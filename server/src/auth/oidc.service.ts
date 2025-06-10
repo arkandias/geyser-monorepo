@@ -90,6 +90,7 @@ export class OidcService implements OnModuleInit {
       return oidcTokenResponseSchema.parse(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        console.log(error);
         throw new UnauthorizedException({
           message: "Identity token request failed",
           error: `${error.name}: ${error.message}`,

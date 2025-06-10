@@ -5,52 +5,48 @@ resolver 127.0.0.11 valid=1y ipv6=off;
 server {
     listen 80 default_server;
     server_name _;
-    
+
     # Return no response and close connection
     return 444;
 }
 
-# Keycloak admin server
+# Redirect HTTP traffic to HTTPS
 server {
     listen 80;
-    server_name auth-admin.${NGINX_DOMAIN};
-    
-    set $keycloak_url ${NGINX_PROXY_KEYCLOAK_URL};
-    include /etc/nginx/includes/locations/keycloak-admin.conf;
+    server_name ${NGINX_DOMAIN};
+    return 301 https://$host$request_uri;
 }
 
-# Keycloak server
 server {
     listen 80;
-    server_name auth.${NGINX_DOMAIN};
-    
-    set $keycloak_url ${NGINX_PROXY_KEYCLOAK_URL};
-    include /etc/nginx/includes/locations/keycloak.conf;
-}
+    server_name ${NGINX_DOMAIN};
 
-# API server
-server {
-    listen 80;
-    server_name api.${NGINX_DOMAIN};
-    
-    set $api_url ${NGINX_PROXY_API_URL};
-    include /etc/nginx/includes/locations/api.conf;
-}
+    # Enable serving pre-compressed files
+    gzip_static on;
 
-# Dev client server
-server {
-    listen 80;
-    server_name dev.${NGINX_DOMAIN};
-    
-    set $client_url ${NGINX_PROXY_DEV_CLIENT_URL};
-    include /etc/nginx/includes/locations/dev.conf;
-}
+    location /auth {
+        rewrite ^/auth(.*)$ /$1 break;
+        proxy_pass ${NGINX_PROXY_KEYCLOAK_URL};
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Prefix /auth;
+    }
 
-# App preview server
-server {
-    listen 80;
-    server_name preview.${NGINX_DOMAIN};
-    
+    location /api {
+        rewrite ^/api(.*)$ /$1 break;
+        proxy_pass ${NGINX_PROXY_API_URL};
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Prefix /api;
+        proxy_set_header X-Admin-Secret "";
+    }
+
     location / {
         root /usr/share/nginx/html;
         try_files $uri $uri/ /index.html =404;

@@ -21,80 +21,45 @@ server {
 # Redirect HTTP traffic to HTTPS
 server {
     listen 80;
-    server_name ${NGINX_DOMAIN} *.${NGINX_DOMAIN};
+    server_name ${NGINX_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
-# Keycloak admin server
 server {
     listen 443 ssl;
-    server_name auth-admin.${NGINX_DOMAIN};
-    
-    # Configure allowed IPs (e.g., behind a VPN)
-    #allow 10.0.0.0/24;
-    #deny all;
-    
-    ssl_certificate /etc/nginx/certs/${NGINX_DOMAIN}/fullchain.crt;
-    ssl_certificate_key /etc/nginx/certs/${NGINX_DOMAIN}/private.key;
-    
-    # Client certificate verification
-    #ssl_client_certificate /etc/nginx/certs/client/ca.crt;
-    #ssl_verify_client on;
-    
-    set $keycloak_url ${NGINX_PROXY_KEYCLOAK_URL};
-    include /etc/nginx/includes/locations/keycloak-admin.conf;
-}
+    server_name ${NGINX_DOMAIN};
 
-# Keycloak server
-server {
-    listen 443 ssl;
-    server_name auth.${NGINX_DOMAIN};
-    
     ssl_certificate /etc/nginx/certs/${NGINX_DOMAIN}/fullchain.crt;
     ssl_certificate_key /etc/nginx/certs/${NGINX_DOMAIN}/private.key;
-    
-    set $keycloak_url ${NGINX_PROXY_KEYCLOAK_URL};
-    include /etc/nginx/includes/locations/keycloak.conf;
-}
 
-# API server
-server {
-    listen 443 ssl;
-    server_name api.${NGINX_DOMAIN};
-    
-    ssl_certificate /etc/nginx/certs/${NGINX_DOMAIN}/fullchain.crt;
-    ssl_certificate_key /etc/nginx/certs/${NGINX_DOMAIN}/private.key;
-    
-    set $api_url ${NGINX_PROXY_API_URL};
-    include /etc/nginx/includes/locations/api.conf;
-    # Disable admin access
-    proxy_set_header X-Admin-Secret "";
-}
-
-# App server
-server {
-    listen 443 ssl;
-    server_name app.${NGINX_DOMAIN};
-    
-    ssl_certificate /etc/nginx/certs/${NGINX_DOMAIN}/fullchain.crt;
-    ssl_certificate_key /etc/nginx/certs/${NGINX_DOMAIN}/private.key;
-    
     # Enable serving pre-compressed files
     gzip_static on;
-    
+
+    location /auth {
+        rewrite ^/auth(.*)$ /$1 break;
+        proxy_pass ${NGINX_PROXY_KEYCLOAK_URL};
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Prefix /auth;
+    }
+
+    location /api {
+        rewrite ^/api(.*)$ /$1 break;
+        proxy_pass ${NGINX_PROXY_API_URL};
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Prefix /api;
+        proxy_set_header X-Admin-Secret "";
+    }
+
     location / {
         root /usr/share/nginx/html;
         try_files $uri $uri/ /index.html =404;
     }
-}
-
-# Redirect main domain to app (temporary)
-server {
-    listen 443 ssl;
-    server_name ${NGINX_DOMAIN};
-    
-    ssl_certificate /etc/nginx/certs/${NGINX_DOMAIN}/fullchain.crt;
-    ssl_certificate_key /etc/nginx/certs/${NGINX_DOMAIN}/private.key;
-    
-    return 302 https://app.${NGINX_DOMAIN}$request_uri;
 }

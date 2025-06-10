@@ -76,15 +76,12 @@ export class AuthController {
     }
 
     const { redirectUrl } = this.authService.getState(state);
-    const subdomain = redirectUrl?.hostname.split(".")[0] ?? "";
     const key = this.configService.organizationKey;
 
     try {
       const organization = await this.organizationService.findByKey(key);
       if (!organization) {
-        throw new UnauthorizedException(
-          `Organization '${subdomain}' not found`,
-        );
+        throw new UnauthorizedException(`Organization '${key}' not found`);
       }
 
       const { accessToken: identityToken } =

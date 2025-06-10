@@ -160,6 +160,15 @@ _validate_required_env_vars() {
     fi
 }
 
+_validate_optional_env_vars() {
+    local var
+    for var in "${OPTIONAL_ENV_VARS[@]}"; do
+        if [[ -z "${!var}" ]]; then
+            declare -gr "${var}"
+        fi
+    done
+}
+
 _compute_additional_env_vars() {
     local protocol
     if [[ "${GEYSER_MODE}" == "development" ]]; then

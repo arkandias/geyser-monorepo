@@ -8,7 +8,7 @@ readonly GEYSER_ENV_VARS=(
     "GEYSER_TAG"
     "GEYSER_LOG_LEVEL"
     "GEYSER_AS_SERVICE"
-    "API_ORGANIZATION_KEY=univ-lille-dpt-math"
+    "API_ORGANIZATION_KEY"
 )
 
 readonly REQUIRED_ENV_VARS=(

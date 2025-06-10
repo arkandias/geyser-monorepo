@@ -8,7 +8,7 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/geyser</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="postgres@geyser-dev" uuid="4a5b752e-79d7-4ad8-bbb5-5389de460195">
+    <data-source source="LOCAL" name="postgres@geyser" uuid="4a5b752e-79d7-4ad8-bbb5-5389de460195">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

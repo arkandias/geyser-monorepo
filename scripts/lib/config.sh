@@ -168,10 +168,8 @@ _compute_additional_env_vars() {
         protocol="https"
     fi
 
-    declare -gr GEYSER_ORIGIN="${protocol}://*.${GEYSER_DOMAIN}"
-    declare -gr KC_HOSTNAME="${protocol}://auth.${GEYSER_DOMAIN}"
-    declare -gr KC_HOSTNAME_ADMIN="${protocol}://auth-admin.${GEYSER_DOMAIN}"
-    declare -gr API_URL="${protocol}://api.${GEYSER_DOMAIN}"
+    declare -gr GEYSER_ORIGIN="${protocol}://${GEYSER_DOMAIN}/*"
+    declare -gr API_URL="${protocol}://${GEYSER_DOMAIN}/api"
 }
 
 _env_summary() {

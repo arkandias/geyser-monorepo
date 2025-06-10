@@ -1,3 +1,5 @@
+import * as https from "node:https";
+
 import {
   Injectable,
   InternalServerErrorException,
@@ -77,7 +79,13 @@ export class OidcService implements OnModuleInit {
       const response = await axios.post(
         this.metadata.tokenUrl,
         new URLSearchParams({ ...params }).toString(),
-        { headers: { "Content-Type": "application/x-www-form-urlencoded" } },
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          // TODO: remove in prod
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
+        },
       );
       return oidcTokenResponseSchema.parse(response.data);
     } catch (error) {

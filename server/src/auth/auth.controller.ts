@@ -115,6 +115,7 @@ export class AuthController {
       }
     } catch (error) {
       if (redirectUrl) {
+        console.log(error);
         redirectUrl.searchParams.set("auth_error", errorMessage(error));
         res.redirect(redirectUrl.toString());
       } else {

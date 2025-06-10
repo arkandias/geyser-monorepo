@@ -9,7 +9,7 @@ COPY . /app
 WORKDIR /app
 
 ARG VITE_BUILD_VERSION=univ-lille
-ARG VITE_API_URL=https://geyser-dev.univ-lille.fr/api
+ARG VITE_API_URL=https://geyser.univ-lille.fr/api
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run -r build

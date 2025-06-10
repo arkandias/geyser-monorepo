@@ -135,7 +135,7 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: |
             VITE_BUILD_VERSION=${{ env.BUILD_VERSION }}
-            VITE_API_URL=https://geyser-dev.univ-lille.fr/api
+            VITE_API_URL=https://geyser.univ-lille.fr/api
 
       - name: Build and push Backend Docker image
         uses: docker/build-push-action@v6

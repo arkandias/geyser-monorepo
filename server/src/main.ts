@@ -22,9 +22,9 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
-  if (configService.nodeEnv === "development") {
-    app.useGlobalInterceptors(new LoggingInterceptor());
-  }
+  // if (configService.nodeEnv === "development") {
+  app.useGlobalInterceptors(new LoggingInterceptor());
+  // }
 
   app.use(compression());
 

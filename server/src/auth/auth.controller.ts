@@ -21,8 +21,8 @@ import { OidcService } from "./oidc.service";
 
 @Controller("auth")
 export class AuthController {
-  readonly loginCallbackUrl: URL;
-  readonly logoutCallbackUrl: URL;
+  readonly loginCallbackUrl: string;
+  readonly logoutCallbackUrl: string;
 
   constructor(
     private authService: AuthService,
@@ -33,14 +33,10 @@ export class AuthController {
     private organizationService: OrganizationService,
     private userService: UserService,
   ) {
-    this.loginCallbackUrl = new URL(
-      "/auth/login/callback",
-      this.configService.api.url,
-    );
-    this.logoutCallbackUrl = new URL(
-      "/auth/logout/callback",
-      this.configService.api.url,
-    );
+    this.loginCallbackUrl =
+      this.configService.api.url.href + "/auth/login/callback";
+    this.logoutCallbackUrl =
+      this.configService.api.url.href + "/auth/logout/callback";
   }
 
   @Get("login")
@@ -61,7 +57,7 @@ export class AuthController {
     authUrl.searchParams.set("response_type", "code");
     authUrl.searchParams.set("state", stateId);
     authUrl.searchParams.set("scope", "openid");
-    authUrl.searchParams.set("redirect_uri", this.loginCallbackUrl.href);
+    authUrl.searchParams.set("redirect_uri", this.loginCallbackUrl);
 
     res.redirect(authUrl.href);
   }
@@ -101,7 +97,7 @@ export class AuthController {
           client_secret: this.configService.oidc.clientSecret,
           grant_type: "authorization_code",
           code,
-          redirect_uri: this.loginCallbackUrl.href,
+          redirect_uri: this.loginCallbackUrl,
         });
 
       const { email } = await this.oidcService.verifyToken(identityToken);
@@ -149,7 +145,7 @@ export class AuthController {
     logoutUrl.searchParams.set("state", stateId);
     logoutUrl.searchParams.set(
       "post_logout_redirect_uri",
-      this.logoutCallbackUrl.href,
+      this.logoutCallbackUrl,
     );
 
     // Removing cookies

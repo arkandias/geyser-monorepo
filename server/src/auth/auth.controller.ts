@@ -76,7 +76,10 @@ export class AuthController {
     }
 
     const { redirectUrl } = this.authService.getState(state);
-    const key = this.configService.organizationKey;
+    const subdomain = redirectUrl?.hostname.split(".")[0] ?? "";
+
+    // Override the organization key (useful in dev)
+    const key = this.configService.organizationKey ?? subdomain;
 
     try {
       const organization = await this.organizationService.findByKey(key);

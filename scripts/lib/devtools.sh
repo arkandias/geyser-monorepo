@@ -26,7 +26,7 @@ _compose() {
     )
 
     COMPOSE_BAKE=true
-    GIT_SHA="$(git rev-parse --short HEAD)"
+    GIT_SHA="$(git -C "${GEYSER_HOME}" rev-parse --short HEAD)"
     export COMPOSE_BAKE GIT_SHA
     with_env_vars docker compose --env-file /dev/null "${compose_files[@]}" "$@"
 }

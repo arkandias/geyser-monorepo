@@ -13,23 +13,23 @@ export class CookiesService {
 
   private accessCookieOptions(): CookieOptions {
     return {
-      domain: this.configService.parentDomain,
+      domain: this.configService.api.url.hostname,
       httpOnly: true,
       secure: this.configService.api.url.protocol === "https:",
       sameSite: "lax",
       maxAge: this.configService.jwt.accessTokenMaxAge,
-      path: "/",
+      path: "/api/",
     };
   }
 
   private refreshCookieOptions(): CookieOptions {
     return {
-      domain: this.configService.parentDomain,
+      domain: this.configService.api.url.hostname,
       httpOnly: true,
       secure: this.configService.api.url.protocol === "https:",
       sameSite: "lax",
       maxAge: this.configService.jwt.refreshTokenMaxAge,
-      path: "/auth/token/refresh",
+      path: "/api/auth/token/refresh",
     };
   }
 

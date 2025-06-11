@@ -54,7 +54,7 @@ services:
       - private-kc-db
       - public
     volumes:
-      - ./backups:/opt/keycloak/data/backups
+      - ./keycloak/backups:/opt/keycloak/data/backups
     command: start --optimized
 
   db:
@@ -79,7 +79,7 @@ services:
       - private-db
     volumes:
       - data:/var/lib/postgresql/data
-      - ./backups:/backups
+      - ./db/backups:/backups
 
   hasura:
     image: hasura/graphql-engine:v2.48.0.ubuntu

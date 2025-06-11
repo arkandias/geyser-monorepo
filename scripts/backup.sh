@@ -25,9 +25,14 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "$(readlink -f "${BASH_SOURCE[0]}")")" &>/dev/
 declare -r SCRIPT_DIR
 
 timestamp="$(date +%Y-%m-%d-%H-%M-%S)"
+db_backup="db_${timestamp}"
+kc_backup="kc_${timestamp}"
 
-"${SCRIPT_DIR}/geyser" stop
-"${SCRIPT_DIR}/geyser" data-backup --name "${timestamp}"
-"${SCRIPT_DIR}/geyser" keycloak-export --name "${timestamp}"
-"${SCRIPT_DIR}/geyser" webdav-upload --name "${timestamp}"
+if [[ -n "$("${SCRIPT_DIR}/geyser" compose ps -q)" ]]; then
+    "${SCRIPT_DIR}/geyser" stop
+fi
+"${SCRIPT_DIR}/geyser" data-backup --name "${db_backup}"
+"${SCRIPT_DIR}/geyser" webdav-upload --path "${SCRIPT_DIR}/../db/backups/${db_backup}"
+"${SCRIPT_DIR}/geyser" keycloak-export --name "${kc_backup}"
+"${SCRIPT_DIR}/geyser" webdav-upload --path "${SCRIPT_DIR}/../keycloak/backups/${kc_backup}"
 "${SCRIPT_DIR}/geyser" start

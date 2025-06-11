@@ -8,7 +8,7 @@ Import Keycloak realms and users
 
 Usage: geyser keycloak-import
 
-Import Keycloak realms and users from a previous export in a backup directory.
+Import Keycloak realms and users from a previous backup directory.
 
 Options:
   -h, --help        Show this help message
@@ -54,18 +54,21 @@ handle_keycloak_import() {
         _compose rm -s -f keycloak
     fi
 
-    # Select a backup directory or check if the given directory exists
+    # Select a backup directory
     if [[ -z "${backup}" ]]; then
         local -a backups
         mapfile -t backups < <(basename -a "${KC_BACKUPS_DIR}"/*/)
         select_backup "${backups[@]}"
         backup="${SELECTED_BACKUP}"
-    elif [ ! -d "${KC_BACKUPS_DIR}/${backup}" ]; then
+    fi
+
+    # Check if backup directory exists
+    if [ ! -d "${KC_BACKUPS_DIR}/${backup}" ]; then
         error "Backup directory ${backup} does not exist"
         exit 1
     fi
 
-    info "Importing Keycloak realms and users from ${KC_BACKUPS_DIR}/${backup}..."
+    info "Importing Keycloak realms and users from ${KC_BACKUPS_DIR}/${backup}/..."
     _compose run --rm keycloak import --dir "/opt/keycloak/data/backups/${backup}"
     success "Keycloak realms and users imported successfully"
 }

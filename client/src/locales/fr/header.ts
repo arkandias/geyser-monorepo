@@ -32,8 +32,8 @@ export default {
           <div>
             Pour toute question ou remarque, vous pouvez envoyer un message à l'adresse
             électronique suivante&nbsp;:
-            <a href="mailto:contact{'@'}geyserflow.org"
-              >contact{'@'}geyserflow.org</a
+            <a href="mailto:julien.hauseux{'@'}univ-lille.fr"
+              >julien.hauseux@univ-lille.fr</a
             >
           </div>`,
       },
@@ -73,8 +73,8 @@ export default {
           <p>
             Pour exercer vos droits ou pour toute question sur le traitement de vos
             données, vous pouvez envoyer un message à l'adresse électronique suivante&nbsp;:
-            <a href="mailto:contact{'@'}geyserflow.org"
-              >contact{'@'}geyserflow.org</a
+            <a href="mailto:julien.hauseux{'@'}univ-lille.fr"
+              >julien.hauseux@univ-lille.fr</a
             >
           </div>
           <p>

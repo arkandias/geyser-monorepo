@@ -8,8 +8,8 @@ FROM base AS build
 COPY . /app
 WORKDIR /app
 
-ARG VITE_BUILD_VERSION=alpha
-ARG VITE_API_URL=https://geyser.univ-lille.fr/api
+ARG VITE_BUILD_VERSION
+ARG VITE_API_URL
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run -r build

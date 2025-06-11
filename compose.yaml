@@ -142,6 +142,9 @@ services:
   frontend:
     build:
       target: frontend
+      args:
+        VITE_BUILD_VERSION: "${GIT_SHA}"
+        VITE_API_URL: "https://geyser.univ-lille.fr/api"
     restart: always
     depends_on:
       keycloak:

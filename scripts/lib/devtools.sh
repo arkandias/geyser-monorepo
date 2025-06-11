@@ -25,6 +25,9 @@ _compose() {
         "CLIENT_SECRET"
     )
 
+    COMPOSE_BAKE=true
+    GIT_SHA=$(git rev-parse --short HEAD)
+    export COMPOSE_BAKE GIT_SHA
     with_env_vars docker compose --env-file /dev/null "${compose_files[@]}" "$@"
 }
 

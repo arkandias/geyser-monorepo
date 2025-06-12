@@ -20,7 +20,7 @@ import {
   DeleteCustomTextDocument,
   UpdateCustomTextDocument,
 } from "@/gql/graphql.ts";
-import { customTextDefault, customTextLabel } from "@/locales/helpers.ts";
+import { customTextDefault } from "@/locales/helpers.ts";
 import type { AuthManager } from "@/services/auth.ts";
 import { useCustomTextsStore } from "@/stores/useCustomTextsStore.ts";
 
@@ -35,7 +35,7 @@ const customTextOptions = computed(() =>
   CUSTOM_TEXT_KEYS.map((key) => ({
     key,
     value: getCustomText(key).value,
-    label: customTextLabel(t, key),
+    label: "customTextLabel(t, key)",
     default: customTextDefault(t, key),
     edit: false,
   })),

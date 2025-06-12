@@ -7,7 +7,7 @@ import { graphql } from "@/gql";
 import { GetAdminRolesDocument } from "@/gql/graphql.ts";
 import type { AuthManager } from "@/services/auth.ts";
 
-// import AdminGeneralCustomTexts from "@/components/admin/AdminGeneralCustomTexts.vue";
+import AdminGeneralCustomTexts from "@/components/admin/AdminGeneralCustomTexts.vue";
 import AdminGeneralPhase from "@/components/admin/AdminGeneralPhase.vue";
 import AdminGeneralRoles from "@/components/admin/AdminGeneralRoles.vue";
 import AdminGeneralYears from "@/components/admin/AdminGeneralYears.vue";
@@ -82,7 +82,7 @@ const teachers = computed(() => data.value?.teachers ?? []);
       icon="sym_s_edit_note"
       :label="t('admin.general.customTexts.label')"
     >
-      <!--      <AdminGeneralCustomTexts />-->
+      <AdminGeneralCustomTexts />
     </AdminSection>
   </QList>
 </template>

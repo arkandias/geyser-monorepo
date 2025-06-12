@@ -10,43 +10,56 @@ server {
     return 444;
 }
 
-# Redirect HTTP traffic to HTTPS
+# Keycloak admin server
 server {
     listen 80;
-    server_name ${NGINX_DOMAIN};
-    return 301 https://$host$request_uri;
+    server_name auth-admin.${NGINX_DOMAIN};
+    
+    set $keycloak_url ${NGINX_PROXY_KEYCLOAK_URL};
+    include /etc/nginx/includes/locations/keycloak-admin.conf;
 }
 
+# Keycloak server
 server {
     listen 80;
-    server_name ${NGINX_DOMAIN};
+    server_name auth.${NGINX_DOMAIN};
+    
+    set $keycloak_url ${NGINX_PROXY_KEYCLOAK_URL};
+    include /etc/nginx/includes/locations/keycloak.conf;
+}
 
-    # Enable serving pre-compressed files
-    gzip_static on;
+# API server
+server {
+    listen 80;
+    server_name api.${NGINX_DOMAIN};
+    
+    set $api_url ${NGINX_PROXY_API_URL};
+    include /etc/nginx/includes/locations/api.conf;
+}
 
-    location /auth/ {
-        rewrite ^/auth/(.*)$ /$1 break;
-        proxy_pass ${NGINX_PROXY_KEYCLOAK_URL};
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Port $server_port;
-        proxy_set_header X-Forwarded-Prefix /auth;
-    }
+# Dev client server
+server {
+    listen 80;
+    server_name dev.${NGINX_DOMAIN};
+    
+    set $client_url ${NGINX_PROXY_DEV_SERVER_URL};
+    include /etc/nginx/includes/locations/client.conf;
+}
 
-    location /api/ {
-        rewrite ^/api/(.*)$ /$1 break;
-        proxy_pass ${NGINX_PROXY_API_URL};
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Port $server_port;
-        proxy_set_header X-Forwarded-Prefix /api;
-        proxy_set_header X-Admin-Secret "";
-    }
+# Preview client server
+server {
+    listen 80;
+    server_name preview.${NGINX_DOMAIN};
+    
+    set $client_url ${NGINX_PROXY_PREVIEW_SERVER_URL};
+    include /etc/nginx/includes/locations/client.conf;
+}
 
+# App build server
+server {
+    listen 80;
+    server_name build.${NGINX_DOMAIN};
+    
     location / {
         root /usr/share/nginx/html;
         try_files $uri $uri/ /index.html =404;

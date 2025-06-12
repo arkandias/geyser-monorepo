@@ -52,7 +52,7 @@ handle_init() {
 
     info "Initializing Keycloak..."
     _compose run --rm -e API_URL -e GEYSER_ORIGIN -e CLIENT_SECRET keycloak \
-        import --file /opt/keycloak/data/import/master-realm.json
+        import --file /opt/keycloak/data/import/geyser-realm.json
 
     info "Initializing database..."
     _compose run --rm -v "${GEYSER_HOME}"/db/init:/docker-entrypoint-initdb.d db docker-ensure-initdb.sh

@@ -43,7 +43,8 @@ services:
       KC_DB_USERNAME: "postgres"
       KC_DB_PASSWORD: "${POSTGRES_KC_PASSWORD}"
       KC_DB_SCHEMA: "public"
-      KC_HOSTNAME: "https://geyser.univ-lille.fr/auth"
+      KC_HOSTNAME: "${KC_HOSTNAME}"
+      KC_HOSTNAME_ADMIN: "${KC_HOSTNAME_ADMIN}"
       KC_HOSTNAME_DEBUG: "false"
       KC_HOSTNAME_STRICT: "true"
       KC_HTTP_ENABLED: "true"
@@ -106,8 +107,7 @@ services:
       - private-db
 
   backend:
-    build:
-      target: backend
+    image: ghcr.io/arkandias/geyser-backend:${GEYSER_TAG}
     restart: always
     depends_on:
       keycloak:
@@ -140,11 +140,7 @@ services:
       - public
 
   frontend:
-    build:
-      target: frontend
-      args:
-        VITE_BUILD_VERSION: "${GIT_SHA}"
-        VITE_API_URL: "https://geyser.univ-lille.fr/api"
+    image: ghcr.io/arkandias/geyser-frontend:${GEYSER_TAG}
     restart: always
     depends_on:
       keycloak:

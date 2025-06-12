@@ -179,6 +179,8 @@ _compute_additional_env_vars() {
     fi
 
     declare -gr GEYSER_ORIGIN="${protocol}://${GEYSER_DOMAIN}/*"
+    declare -gr KC_HOSTNAME="${protocol}://${GEYSER_DOMAIN}/auth"
+    declare -gr KC_HOSTNAME_ADMIN="${protocol}://${GEYSER_DOMAIN}/auth"
     declare -gr API_URL="${protocol}://${GEYSER_DOMAIN}/api"
 }
 
@@ -193,6 +195,8 @@ _env_summary() {
     debug "GEYSER_AS_SERVICE=${GEYSER_AS_SERVICE}"
     debug "GEYSER_ORIGIN=${GEYSER_ORIGIN}"
     debug "API_URL=${API_URL}"
+    debug "KC_HOSTNAME=${KC_HOSTNAME}"
+    debug "KC_HOSTNAME_ADMIN=${KC_HOSTNAME_ADMIN}"
     debug "======================================="
 }
 

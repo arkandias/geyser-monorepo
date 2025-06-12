@@ -25,9 +25,7 @@ _compose() {
         "CLIENT_SECRET"
     )
 
-    COMPOSE_BAKE=true
-    GIT_SHA="$(git -C "${GEYSER_HOME}" rev-parse --short HEAD)"
-    export COMPOSE_BAKE GIT_SHA
+    export COMPOSE_BAKE=true
     with_env_vars docker compose --env-file /dev/null "${compose_files[@]}" "$@"
 }
 

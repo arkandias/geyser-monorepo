@@ -1,3 +1,6 @@
+import { contactEmail } from "@/config/env.ts";
+import type { InfoTextKey } from "@/config/info-text-keys.ts";
+
 export default {
   header: {
     home: {
@@ -32,9 +35,7 @@ export default {
           <div>
             For any questions or comments, you can send a message to the following
             email address:
-            <a href="mailto:julien.hauseux{'@'}univ-lille.fr"
-              >julien.hauseux@univ-lille.fr</a
-            >
+            <a href="mailto:${contactEmail}">${contactEmail}</a>
           </div>`,
       },
       legalNotice: {
@@ -72,9 +73,7 @@ export default {
           <p>
             To exercise your rights or for any questions about the processing of your
             data, you can send a message to the following email address:
-            <a href="mailto:julien.hauseux{'@'}univ-lille.fr"
-              >julien.hauseux@univ-lille.fr</a
-            >
+            <a href="mailto:${contactEmail}">${contactEmail}</a>
           </div>
           <p>
             If, after sending a message to the above address, you believe that your
@@ -123,7 +122,8 @@ export default {
             >https://github.com/arkandias/geyser-monorepo</a
           >.`,
       },
-    },
+    } satisfies Record<InfoTextKey, { label: string; message: string }> &
+      Record<string, unknown>,
     user: {
       label: "User",
       login: "Login",

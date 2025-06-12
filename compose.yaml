@@ -43,7 +43,7 @@ services:
       KC_DB_USERNAME: "postgres"
       KC_DB_PASSWORD: "${POSTGRES_KC_PASSWORD}"
       KC_DB_SCHEMA: "public"
-      KC_HOSTNAME: "https://geyser.univ-lille.fr/kc-auth"
+      KC_HOSTNAME: "https://geyser.univ-lille.fr/auth"
       KC_HOSTNAME_DEBUG: "false"
       KC_HOSTNAME_STRICT: "true"
       KC_HTTP_ENABLED: "true"

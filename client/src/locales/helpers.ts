@@ -58,7 +58,7 @@ export const requestTypeLabel = (
   }
 };
 
-export const roleTypeLabel = (
+export const roleLabel = (
   t: ComposerTranslation,
   role: RoleEnum,
   plural = 1,

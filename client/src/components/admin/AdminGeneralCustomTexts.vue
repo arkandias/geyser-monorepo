@@ -19,9 +19,9 @@ import {
   DeleteCustomTextDocument,
   UpdateCustomTextDocument,
 } from "@/gql/graphql.ts";
+import { customTextDefault, customTextLabel } from "@/locales/helpers.ts";
 import type { AuthManager } from "@/services/auth.ts";
 import { useCustomTextsStore } from "@/stores/useCustomTextsStore.ts";
-import { camelToDot } from "@/utils";
 
 import EditableText from "@/components/core/EditableText.vue";
 
@@ -105,7 +105,7 @@ const callOnDelete = async (key: CustomTextKey) => {
     <QExpansionItem
       v-for="key in CUSTOM_TEXT_KEYS"
       :key
-      :label="t(`customTextLabel.${key}`)"
+      :label="customTextLabel(t, key)"
       dense
       dense-toggle
     >
@@ -118,7 +118,7 @@ const callOnDelete = async (key: CustomTextKey) => {
             :set-text="
               (value) => updateCustomTextHandle(authManager.orgId, key, value)
             "
-            :default-text="t(camelToDot(key))"
+            :default-text="customTextDefault(t, key)"
           />
         </QCardSection>
         <QCardActions dense>

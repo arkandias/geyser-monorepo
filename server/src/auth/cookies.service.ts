@@ -13,7 +13,7 @@ export class CookiesService {
 
   private accessCookieOptions(): CookieOptions {
     return {
-      domain: this.configService.api.url.hostname,
+      domain: this.configService.parentDomain,
       httpOnly: true,
       secure: this.configService.api.url.protocol === "https:",
       sameSite: "lax",
@@ -24,7 +24,7 @@ export class CookiesService {
 
   private refreshCookieOptions(): CookieOptions {
     return {
-      domain: this.configService.api.url.hostname,
+      domain: this.configService.parentDomain,
       httpOnly: true,
       secure: this.configService.api.url.protocol === "https:",
       sameSite: "lax",

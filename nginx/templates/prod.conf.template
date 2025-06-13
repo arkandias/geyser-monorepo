@@ -32,9 +32,6 @@ server {
     ssl_certificate /etc/nginx/certs/${NGINX_DOMAIN}/fullchain.crt;
     ssl_certificate_key /etc/nginx/certs/${NGINX_DOMAIN}/private.key;
 
-    # Enable serving pre-compressed files
-    gzip_static on;
-
     location /auth/ {
         rewrite ^/auth/(.*)$ /$1 break;
         proxy_pass ${NGINX_PROXY_KEYCLOAK_URL}/;
@@ -57,6 +54,9 @@ server {
         proxy_set_header X-Forwarded-Prefix /api;
         proxy_set_header X-Admin-Secret "";
     }
+
+    # Enable serving pre-compressed files
+    gzip_static on;
 
     location / {
         root /usr/share/nginx/html;
